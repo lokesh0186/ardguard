@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:tool:reader",
+      "displayName": "Example Reader",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/reader.json",
+      "score": 95,
+      "source": "https://finder.example.org/"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+name: Bug report
+description: Report deterministic product behavior with a minimal sanitized reproduction
+title: "bug: "
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: ARDGuard version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Do not include credentials, private catalogs, or trust material.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual decision
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior and source
+    validations:
+      required: true

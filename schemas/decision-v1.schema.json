@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/decision-v1.schema.json",
+  "title": "ARDGuard Decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "outcome", "selected_candidate_id", "selected_rank", "reason", "evaluations", "decision_sha256"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/decision/v1"},
+    "task_id": {"type": "string", "minLength": 1},
+    "outcome": {"enum": ["SELECT", "DEFER", "ABSTAIN", "ERROR"]},
+    "selected_candidate_id": {"type": ["string", "null"]},
+    "selected_rank": {"type": ["integer", "null"], "minimum": 1},
+    "reason": {"type": "string", "minLength": 1},
+    "evaluations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "rank", "score", "verdict", "reasons", "providers"],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "rank": {"type": "integer", "minimum": 1},
+          "score": {"type": "integer", "minimum": 0, "maximum": 100},
+          "verdict": {"enum": ["ELIGIBLE", "INELIGIBLE", "INDETERMINATE"]},
+          "reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "version"],
+              "properties": {"id": {"type": "string"}, "version": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "decision_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"outcome": {"const": "SELECT"}}},
+      "then": {
+        "properties": {
+          "selected_candidate_id": {"type": "string", "minLength": 1},
+          "selected_rank": {"type": "integer", "minimum": 1}
+        }
+      },
+      "else": {
+        "properties": {
+          "selected_candidate_id": {"type": "null"},
+          "selected_rank": {"type": "null"}
+        }
+      }
+    }
+  ]
+}

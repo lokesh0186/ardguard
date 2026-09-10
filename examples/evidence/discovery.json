@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:package:rank-one",
+      "displayName": "Rank One Package",
+      "type": "application/vnd.pypi.project+json",
+      "url": "https://example.org/rank-one.json",
+      "score": 98,
+      "source": "https://finder.example.org/",
+      "metadata": {"artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    },
+    {
+      "identifier": "urn:air:example.org:package:rank-two",
+      "displayName": "Rank Two Package",
+      "type": "application/vnd.pypi.project+json",
+      "url": "https://example.org/rank-two.json",
+      "score": 92,
+      "source": "https://finder.example.org/",
+      "metadata": {"artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    }
+  ]
+}

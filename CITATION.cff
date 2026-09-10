@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Citation metadata for the ARDGuard software release."
+title: ARDGuard
+authors:
+  - family-names: Chauhan
+    given-names: Lokesh
+    orcid: "https://orcid.org/0009-0004-1544-6424"
+type: software
+version: 0.1.0b1
+license: Apache-2.0
+repository-code: "https://github.com/lokesh0186/ardguard"
+url: "https://github.com/lokesh0186/ardguard"
+abstract: "ARDGuard is a deterministic eligibility and fallback layer between agentic resource discovery and final selection or invocation."
+keywords:
+  - agentic-resource-discovery
+  - security
+  - eligibility
+  - policy
+  - fallback

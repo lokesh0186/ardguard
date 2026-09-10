@@ -1,0 +1,107 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ardguard"
+version = "0.1.0b1"
+description = "Eligibility-aware final selection and fallback for agentic resource discovery"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{name = "Lokesh Chauhan"}]
+keywords = ["agentic-resources", "resource-discovery", "security", "policy", "fallback"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security",
+]
+dependencies = ["jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2,<2",
+  "mypy>=1.15,<2",
+  "pytest>=8,<10",
+  "pytest-cov>=5,<8",
+  "ruff>=0.11,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/lokesh0186/ardguard"
+Repository = "https://github.com/lokesh0186/ardguard"
+Documentation = "https://github.com/lokesh0186/ardguard#readme"
+Changelog = "https://github.com/lokesh0186/ardguard/blob/main/CHANGELOG.md"
+Security = "https://github.com/lokesh0186/ardguard/security/policy"
+
+[project.scripts]
+ardguard = "ardguard.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ardguard"]
+core-metadata-version = "2.4"
+
+[tool.hatch.build.targets.wheel.force-include]
+"schemas" = "ardguard/schemas"
+
+[tool.hatch.build.targets.sdist]
+core-metadata-version = "2.4"
+only-include = [
+  "src/ardguard",
+  "schemas",
+  "examples",
+  "docs",
+  "README.md",
+  "LICENSE",
+  "NOTICE",
+  "SECURITY.md",
+  "CONTRIBUTING.md",
+  "SUPPORT.md",
+  "ROADMAP.md",
+  "CHANGELOG.md",
+  "CITATION.cff",
+  "pyproject.toml",
+]
+exclude = [
+  "/.gitignore",
+  "**/.DS_Store",
+  "**/._*",
+  "**/__MACOSX/**",
+  "**/__pycache__/**",
+  "**/*.pyc",
+  "tests",
+  "dist",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+branch = true
+source = ["ardguard"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "C4", "PL", "RET", "RUF", "S", "SIM", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["PLR2004", "S101"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["ardguard"]

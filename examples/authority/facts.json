@@ -1,0 +1,21 @@
+{
+  "schema_version": "ardguard.dev/fact-set/v1",
+  "observations": [
+    {
+      "candidate_id": "urn:air:example.org:database:writer",
+      "fact_type": "authority",
+      "provider": {"id": "example.authority", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"granted_permissions": ["records.read", "records.write"]},
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:database:reader",
+      "fact_type": "authority",
+      "provider": {"id": "example.authority", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"granted_permissions": ["records.read"]},
+      "provenance": {"fixture": "illustrative"}
+    }
+  ]
+}

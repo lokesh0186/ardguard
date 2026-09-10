@@ -1,0 +1,13 @@
+{
+  "schema_version": "ardguard.dev/fact-set/v1",
+  "observations": [
+    {
+      "candidate_id": "urn:air:example.org:tool:reader",
+      "fact_type": "capability",
+      "provider": {"id": "example.capability", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"verified_capabilities": ["records.read"]},
+      "provenance": {"fixture": "illustrative"}
+    }
+  ]
+}

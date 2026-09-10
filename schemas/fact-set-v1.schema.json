@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/fact-set-v1.schema.json",
+  "title": "ARDGuard FactSet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "observations"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/fact-set/v1"},
+    "observations": {"type": "array", "items": {"$ref": "#/$defs/observation"}}
+  },
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "fact_type", "provider", "state", "payload", "provenance"],
+      "properties": {
+        "candidate_id": {"type": "string", "minLength": 1},
+        "fact_type": {"enum": ["capability", "evidence", "authority"]},
+        "provider": {"$ref": "#/$defs/provider"},
+        "state": {"enum": ["AVAILABLE", "UNAVAILABLE", "OPERATIONAL_ERROR", "INDETERMINATE"]},
+        "payload": {"type": "object"},
+        "provenance": {"type": "object"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"state": {"not": {"const": "AVAILABLE"}}}},
+          "then": {"properties": {"payload": {"maxProperties": 0}}}
+        },
+        {
+          "if": {"properties": {"state": {"const": "AVAILABLE"}, "fact_type": {"const": "capability"}}, "required": ["state", "fact_type"]},
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["verified_capabilities"],
+                "properties": {"verified_capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "AVAILABLE"}, "fact_type": {"const": "authority"}}, "required": ["state", "fact_type"]},
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["granted_permissions"],
+                "properties": {"granted_permissions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "AVAILABLE"}, "fact_type": {"const": "evidence"}}, "required": ["state", "fact_type"]},
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["verifier_outcome", "authentic", "trust_valid", "signer_identity", "subject_sha256", "artifact_sha256", "evidence_sha256", "predicate_types", "resource_id"],
+                "properties": {
+                  "verifier_outcome": {"enum": ["AVAILABLE_VALID", "AVAILABLE_INVALID"]},
+                  "authentic": {"type": "boolean"},
+                  "trust_valid": {"type": "boolean"},
+                  "signer_identity": {"type": "string", "minLength": 1},
+                  "subject_sha256": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/sha256"}},
+                  "artifact_sha256": {"$ref": "#/$defs/sha256"},
+                  "evidence_sha256": {"$ref": "#/$defs/sha256"},
+                  "predicate_types": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+                  "resource_id": {"type": "string", "minLength": 1}
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

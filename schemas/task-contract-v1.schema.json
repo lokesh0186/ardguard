@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/task-contract-v1.schema.json",
+  "title": "ARDGuard TaskContract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "operation", "required_capabilities", "evidence", "authority"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/task-contract/v1"},
+    "task_id": {"type": "string", "minLength": 1},
+    "operation": {"type": "string", "minLength": 1},
+    "required_capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "artifact_digest_field", "accepted_predicate_types", "trusted_signers"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "artifact_digest_field": {"type": "string", "minLength": 1},
+        "accepted_predicate_types": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "trusted_signers": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "required_permissions", "maximum_permissions"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "required_permissions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "maximum_permissions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "anyOf": [
+    {"properties": {"required_capabilities": {"minItems": 1}}},
+    {"properties": {"evidence": {"properties": {"required": {"const": true}}}}},
+    {"properties": {"authority": {"properties": {"required": {"const": true}}}}}
+  ]
+}

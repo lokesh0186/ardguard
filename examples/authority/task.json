@@ -1,0 +1,17 @@
+{
+  "schema_version": "ardguard.dev/task-contract/v1",
+  "task_id": "authority-bounded-read",
+  "operation": "records.read",
+  "required_capabilities": [],
+  "evidence": {
+    "required": false,
+    "artifact_digest_field": "artifact_sha256",
+    "accepted_predicate_types": [],
+    "trusted_signers": []
+  },
+  "authority": {
+    "required": true,
+    "required_permissions": ["records.read"],
+    "maximum_permissions": ["records.read"]
+  }
+}

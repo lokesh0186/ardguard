@@ -1,0 +1,17 @@
+{
+  "schema_version": "ardguard.dev/task-contract/v1",
+  "task_id": "fallback-example-read",
+  "operation": "records.read",
+  "required_capabilities": ["records.read"],
+  "evidence": {
+    "required": true,
+    "artifact_digest_field": "artifact_sha256",
+    "accepted_predicate_types": ["https://example.org/predicate/publish/v1"],
+    "trusted_signers": ["https://example.org/identity/publisher"]
+  },
+  "authority": {
+    "required": true,
+    "required_permissions": ["records.read"],
+    "maximum_permissions": ["records.read"]
+  }
+}

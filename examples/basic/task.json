@@ -1,0 +1,17 @@
+{
+  "schema_version": "ardguard.dev/task-contract/v1",
+  "task_id": "basic-read",
+  "operation": "records.read",
+  "required_capabilities": ["records.read"],
+  "evidence": {
+    "required": false,
+    "artifact_digest_field": "artifact_sha256",
+    "accepted_predicate_types": [],
+    "trusted_signers": []
+  },
+  "authority": {
+    "required": false,
+    "required_permissions": [],
+    "maximum_permissions": []
+  }
+}

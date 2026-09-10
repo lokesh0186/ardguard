@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/policy-v1.schema.json",
+  "title": "ARDGuard Policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "selection_mode", "required_checks", "indeterminate_action", "operational_error_action"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/policy/v1"},
+    "selection_mode": {"enum": ["fallback", "top-ranked-only"]},
+    "required_checks": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["capability", "evidence", "authority"]}
+    },
+    "indeterminate_action": {"enum": ["DEFER", "ABSTAIN"]},
+    "operational_error_action": {"enum": ["DEFER", "ABSTAIN", "ERROR"]}
+  }
+}

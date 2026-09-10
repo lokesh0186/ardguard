@@ -1,0 +1,73 @@
+{
+  "schema_version": "ardguard.dev/fact-set/v1",
+  "observations": [
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-one",
+      "fact_type": "capability",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"verified_capabilities": ["records.write"]},
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-one",
+      "fact_type": "evidence",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {
+        "verifier_outcome": "AVAILABLE_VALID",
+        "authentic": true,
+        "trust_valid": true,
+        "signer_identity": "https://example.org/identity/publisher",
+        "subject_sha256": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],
+        "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "evidence_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "predicate_types": ["https://example.org/predicate/publish/v1"],
+        "resource_id": "urn:air:example.org:tool:rank-one"
+      },
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-one",
+      "fact_type": "authority",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"granted_permissions": ["records.read"]},
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-two",
+      "fact_type": "capability",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"verified_capabilities": ["records.read"]},
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-two",
+      "fact_type": "evidence",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {
+        "verifier_outcome": "AVAILABLE_VALID",
+        "authentic": true,
+        "trust_valid": true,
+        "signer_identity": "https://example.org/identity/publisher",
+        "subject_sha256": ["bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+        "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "evidence_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "predicate_types": ["https://example.org/predicate/publish/v1"],
+        "resource_id": "urn:air:example.org:tool:rank-two"
+      },
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:tool:rank-two",
+      "fact_type": "authority",
+      "provider": {"id": "example.local", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {"granted_permissions": ["records.read"]},
+      "provenance": {"fixture": "illustrative"}
+    }
+  ]
+}

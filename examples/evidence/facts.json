@@ -1,0 +1,41 @@
+{
+  "schema_version": "ardguard.dev/fact-set/v1",
+  "observations": [
+    {
+      "candidate_id": "urn:air:example.org:package:rank-one",
+      "fact_type": "evidence",
+      "provider": {"id": "example.evidence", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {
+        "verifier_outcome": "AVAILABLE_VALID",
+        "authentic": true,
+        "trust_valid": true,
+        "signer_identity": "https://example.org/identity/publisher",
+        "subject_sha256": ["bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+        "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "evidence_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "predicate_types": ["https://example.org/predicate/publish/v1"],
+        "resource_id": "urn:air:example.org:package:rank-one"
+      },
+      "provenance": {"fixture": "illustrative"}
+    },
+    {
+      "candidate_id": "urn:air:example.org:package:rank-two",
+      "fact_type": "evidence",
+      "provider": {"id": "example.evidence", "version": "1"},
+      "state": "AVAILABLE",
+      "payload": {
+        "verifier_outcome": "AVAILABLE_VALID",
+        "authentic": true,
+        "trust_valid": true,
+        "signer_identity": "https://example.org/identity/publisher",
+        "subject_sha256": ["bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+        "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "evidence_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "predicate_types": ["https://example.org/predicate/publish/v1"],
+        "resource_id": "urn:air:example.org:package:rank-two"
+      },
+      "provenance": {"fixture": "illustrative"}
+    }
+  ]
+}

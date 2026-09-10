@@ -1,0 +1,17 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:huggingface.co:space:example-weather",
+      "displayName": "Example Weather Space",
+      "type": "application/mcp-server-card+json",
+      "url": "https://huggingface.co/spaces/example/weather",
+      "description": "Synthetic compatibility fixture for an hf-discover result.",
+      "tags": ["mcp"],
+      "capabilities": ["weather.read"],
+      "representativeQueries": ["read the weather"],
+      "metadata": {"artifact_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"},
+      "score": 91,
+      "source": "https://discover.hf.space/"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:tool:reader",
+      "displayName": "Example Reader",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/reader.json",
+      "score": 94,
+      "source": "https://finder.example.org/"
+    }
+  ],
+  "referrals": [
+    {
+      "identifier": "urn:air:example.net:registry:public",
+      "displayName": "Example Registry",
+      "type": "application/ai-registry+json",
+      "url": "https://finder.example.net/search"
+    }
+  ],
+  "pageToken": "example-next-page"
+}

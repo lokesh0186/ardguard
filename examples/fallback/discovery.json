@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:tool:rank-one",
+      "displayName": "Rank One",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/rank-one.json",
+      "score": 98,
+      "source": "https://finder.example.org/",
+      "metadata": {"artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    },
+    {
+      "identifier": "urn:air:example.org:tool:rank-two",
+      "displayName": "Rank Two",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/rank-two.json",
+      "score": 93,
+      "source": "https://finder.example.org/",
+      "metadata": {"artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}
+    }
+  ]
+}

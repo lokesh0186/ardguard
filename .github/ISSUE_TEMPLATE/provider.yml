@@ -1,0 +1,24 @@
+name: Provider proposal
+description: Propose a bounded fact provider or provider correction
+title: "provider: "
+labels: [provider]
+body:
+  - type: dropdown
+    id: fact
+    attributes:
+      label: Fact type
+      options: [capability, evidence, authority]
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Observation, provenance, and trust boundary
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Positive, negative, unavailable, and operational-error cases
+    validations:
+      required: true

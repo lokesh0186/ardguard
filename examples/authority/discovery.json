@@ -1,0 +1,20 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:database:writer",
+      "displayName": "Read and Write Database",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/writer.json",
+      "score": 97,
+      "source": "https://finder.example.org/"
+    },
+    {
+      "identifier": "urn:air:example.org:database:reader",
+      "displayName": "Read-only Database",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/reader.json",
+      "score": 91,
+      "source": "https://finder.example.org/"
+    }
+  ]
+}

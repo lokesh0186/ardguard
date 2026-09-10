@@ -1,0 +1,23 @@
+name: Compatibility report
+description: Report a current ARD, hf-discover, or client wire-shape issue
+title: "compat: "
+labels: [compatibility]
+body:
+  - type: input
+    id: project
+    attributes:
+      label: Upstream project, version, and commit
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Sanitized wire fixture and command
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Documented and observed behavior
+    validations:
+      required: true

@@ -1,0 +1,17 @@
+{
+  "schema_version": "ardguard.dev/task-contract/v1",
+  "task_id": "evidence-bound-package",
+  "operation": "package.use",
+  "required_capabilities": [],
+  "evidence": {
+    "required": true,
+    "artifact_digest_field": "artifact_sha256",
+    "accepted_predicate_types": ["https://example.org/predicate/publish/v1"],
+    "trusted_signers": ["https://example.org/identity/publisher"]
+  },
+  "authority": {
+    "required": false,
+    "required_permissions": [],
+    "maximum_permissions": []
+  }
+}

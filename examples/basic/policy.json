@@ -1,0 +1,7 @@
+{
+  "schema_version": "ardguard.dev/policy/v1",
+  "selection_mode": "fallback",
+  "required_checks": ["capability"],
+  "indeterminate_action": "DEFER",
+  "operational_error_action": "ERROR"
+}
