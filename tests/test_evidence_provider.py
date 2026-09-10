@@ -15,6 +15,7 @@ from ardguard.providers.evidence import (
     OfflineEvidenceProvider,
     VerifierCommand,
     _classify,
+    _macos_profile,
     _safe_environment,
     _sandboxed_argv,
     evidence_subject_digests,
@@ -202,17 +203,11 @@ def test_malformed_evidence_has_no_subject() -> None:
     assert evidence_subject_digests(b"not-json") == ()
 
 
-def test_macos_sandbox_profile_denies_network_and_scopes_writes(
-    tmp_path: Path, monkeypatch
-) -> None:
-    monkeypatch.setattr(
-        "ardguard.providers.evidence.os.uname", lambda: SimpleNamespace(sysname="Darwin")
-    )
-    command = VerifierCommand("test", Path("/usr/bin/true"), ("arg",), (), "root")
-    argv = _sandboxed_argv(command, tmp_path)
-    assert argv[:2] == ("/usr/bin/sandbox-exec", "-p")
-    assert "(deny network*)" in argv[2]
-    assert f'(subpath "{tmp_path.resolve()}")' in argv[2]
+def test_macos_sandbox_profile_denies_network_and_scopes_writes(tmp_path: Path) -> None:
+    profile = _macos_profile(tmp_path)
+    assert "(deny network*)" in profile
+    assert "(deny file-write*)" in profile
+    assert f'(subpath "{tmp_path.resolve()}")' in profile
 
 
 def test_linux_sandbox_uses_network_namespace(tmp_path: Path, monkeypatch) -> None:

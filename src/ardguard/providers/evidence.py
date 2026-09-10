@@ -218,20 +218,26 @@ def _sandboxed_argv(command: VerifierCommand, scratch: Path) -> tuple[str, ...]:
         sandbox = Path("/usr/bin/sandbox-exec")
         if not sandbox.exists():
             raise RuntimeError("macOS sandbox-exec is unavailable")
-        escaped = str(scratch.resolve()).replace("\\", "\\\\").replace('"', '\\"')
-        profile = "\n".join(
-            (
-                "(version 1)",
-                "(allow default)",
-                "(deny network*)",
-                "(deny file-write*)",
-                f'(allow file-write* (subpath "{escaped}"))',
-            )
-        )
+        profile = _macos_profile(scratch)
         return (str(sandbox), "-p", profile, str(executable), *command.arguments)
     if os.uname().sysname == "Linux" and shutil.which("unshare"):
         return ("unshare", "--net", "--", str(executable), *command.arguments)
     raise RuntimeError("no supported network-denying verifier sandbox is available")
+
+
+def _macos_profile(scratch: Path) -> str:
+    """Build the closed macOS profile independently of host availability."""
+
+    escaped = str(scratch.resolve()).replace("\\", "\\\\").replace('"', '\\"')
+    return "\n".join(
+        (
+            "(version 1)",
+            "(allow default)",
+            "(deny network*)",
+            "(deny file-write*)",
+            f'(allow file-write* (subpath "{escaped}"))',
+        )
+    )
 
 
 class OfflineEvidenceProvider:
