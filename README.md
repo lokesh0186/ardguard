@@ -1,6 +1,7 @@
 # ARDGuard
 
 [![PyPI](https://img.shields.io/pypi/v/ardguard)](https://pypi.org/project/ardguard/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22691550.svg)](https://doi.org/10.5281/zenodo.22691550)
 [![Python compatibility](https://github.com/lokesh0186/ardguard/actions/workflows/python-compat.yml/badge.svg?branch=main)](https://github.com/lokesh0186/ardguard/actions/workflows/python-compat.yml)
 [![Python](https://img.shields.io/pypi/pyversions/ardguard)](https://pypi.org/project/ardguard/)
 [![License](https://img.shields.io/pypi/l/ardguard)](LICENSE)
