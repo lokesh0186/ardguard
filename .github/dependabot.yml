@@ -11,10 +11,6 @@ updates:
         update-types:
           - minor
           - patch
-    ignore:
-      - dependency-name: mypy
-        update-types:
-          - version-update:semver-major
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
