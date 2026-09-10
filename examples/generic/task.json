@@ -1,0 +1,17 @@
+{
+  "schema_version": "ardguard.dev/task-contract/v2",
+  "task_id": "region-bound-example",
+  "operation": "records.read",
+  "requirements": [
+    {
+      "requirement_id": "deployment-region",
+      "requirement_type": "deployment.region",
+      "parameters": {"predicate": "one_of", "expected": ["us-east-1"]},
+      "mode": "MANDATORY",
+      "unknown_policy": "INDETERMINATE",
+      "namespace": "https://ardguard.dev/facts/deployment/v1",
+      "schema_identity": "ardguard.dev/constraint/v1"
+    }
+  ],
+  "context": {}
+}

@@ -6,12 +6,12 @@ authors:
     given-names: Lokesh
     orcid: "https://orcid.org/0009-0004-1544-6424"
 type: software
-version: 0.1.0b2
+version: 0.1.0b3
 date-released: 2026-09-10
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.22691551"
-    description: "ARDGuard 0.1.0b2 archival record"
+    value: "10.5281/zenodo.22691550"
+    description: "ARDGuard software concept DOI"
 license: Apache-2.0
 repository-code: "https://github.com/lokesh0186/ardguard"
 url: "https://github.com/lokesh0186/ardguard"

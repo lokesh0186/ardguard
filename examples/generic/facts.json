@@ -1,0 +1,33 @@
+{
+  "schema_version": "ardguard.dev/fact-set/v2",
+  "facts": [
+    {
+      "fact_id": "region-west",
+      "candidate_id": "urn:air:example.org:service:west",
+      "fact_type": "deployment.region",
+      "provider_id": "example.region-provider",
+      "provider_version": "1",
+      "state": "AVAILABLE",
+      "value": "us-west-2",
+      "provenance": {"fixture_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "source_identity": "fixture:west",
+      "observed_at": null,
+      "expires_at": null,
+      "extensions": {}
+    },
+    {
+      "fact_id": "region-east",
+      "candidate_id": "urn:air:example.org:service:east",
+      "fact_type": "deployment.region",
+      "provider_id": "example.region-provider",
+      "provider_version": "1",
+      "state": "AVAILABLE",
+      "value": "us-east-1",
+      "provenance": {"fixture_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+      "source_identity": "fixture:east",
+      "observed_at": null,
+      "expires_at": null,
+      "extensions": {}
+    }
+  ]
+}

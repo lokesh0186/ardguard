@@ -1,0 +1,21 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:service:west",
+      "displayName": "West service",
+      "type": "application/json",
+      "url": "https://example.org/west.json",
+      "score": 98,
+      "source": "https://registry.example.org/",
+      "metadata": {"example:opaque": "preserved"}
+    },
+    {
+      "identifier": "urn:air:example.org:service:east",
+      "displayName": "East service",
+      "type": "application/json",
+      "url": "https://example.org/east.json",
+      "score": 91,
+      "source": "https://registry.example.org/"
+    }
+  ]
+}

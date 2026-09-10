@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: ARDGuard local decision API
+  version: 1.0.0-experimental
+  description: Loopback-only eligibility evaluation. No endpoint invokes a resource.
+servers:
+  - url: http://127.0.0.1:8765
+paths:
+  /v1/evaluate:
+    post:
+      summary: Evaluate ranked candidates against v2 requirements and facts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/EvaluationBundle'}
+      responses:
+        '200': {description: Deterministic decision}
+        '400': {description: Fail-closed contract error}
+  /v1/explain:
+    post:
+      summary: Verify and explain a decision document
+      responses:
+        '200': {description: Explanation}
+        '400': {description: Invalid decision}
+  /v1/validate:
+    post:
+      summary: Validate one versioned document
+      responses:
+        '200': {description: Valid document}
+        '400': {description: Invalid document}
+  /v1/providers:
+    get:
+      summary: List enabled providers
+      responses:
+        '200': {description: Provider list}
+  /v1/health:
+    get:
+      summary: Process health without external dependency checks
+      responses:
+        '200': {description: Healthy}
+  /v1/version:
+    get:
+      summary: Product and API version
+      responses:
+        '200': {description: Version information}
+components:
+  schemas:
+    EvaluationBundle:
+      type: object
+      additionalProperties: false
+      required: [discovery, task, policy, facts]
+      properties:
+        discovery: {type: object}
+        task: {$ref: '../schemas/task-contract-v2.schema.json'}
+        policy: {$ref: '../schemas/policy-v2.schema.json'}
+        facts: {$ref: '../schemas/fact-set-v2.schema.json'}

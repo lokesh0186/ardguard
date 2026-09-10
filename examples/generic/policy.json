@@ -1,0 +1,14 @@
+{
+  "schema_version": "ardguard.dev/policy/v2",
+  "selection_mode": "fallback",
+  "indeterminate_action": "DEFER",
+  "operational_error_action": "ERROR",
+  "preestablished_fact_mode": true,
+  "provider_trust": [
+    {
+      "provider_id": "example.region-provider",
+      "provider_version": "1",
+      "fact_types": ["deployment.region"]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "identifier": "urn:air:example.org:mcp:local-import",
+      "displayName": "Local import",
+      "type": "application/mcp-server-card+json",
+      "url": "https://example.org/card.json",
+      "score": 90,
+      "source": "./local-catalog.json"
+    }
+  ]
+}

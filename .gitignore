@@ -5,6 +5,7 @@
 /.venv/
 /build/
 /dist/
+/compatibility-report.json
 /*.egg-info/
 **/__pycache__/
 **/*.py[cod]

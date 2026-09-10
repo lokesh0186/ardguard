@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "example-ardguard-region-provider"
+version = "0.0.0"
+requires-python = ">=3.10"
+dependencies = ["ardguard>=0.1.0b3"]
+
+[project.entry-points."ardguard.fact_providers"]
+"example.region-provider" = "example_region_provider:RegionProvider"
+
+[tool.hatch.build.targets.wheel]
+packages = ["example_region_provider"]

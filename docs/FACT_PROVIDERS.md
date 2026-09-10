@@ -22,8 +22,10 @@ Each observation must bind:
 - provider-specific provenance.
 
 ARDGuard validates provider observations again before composition. A deployment must
-decide which provider identities and transports it trusts. Provider Python code runs in
-the application trust boundary unless it creates a stronger isolation boundary itself.
+authorize the exact provider ID, version, and permitted fact types in policy. Installed
+does not mean trusted, discovered does not mean enabled, and enabled does not grant a
+provider universal fact authority. Provider Python code runs in the application trust
+boundary unless the deployment creates a stronger isolation boundary itself.
 
 ## Capability
 
@@ -45,3 +47,13 @@ rejects any permission outside the operator-defined maximum set.
 
 `StaticFactProvider` is suitable for offline replay and tests after a trusted transport
 has delivered a validated FactSet. It does not make untrusted JSON authoritative.
+
+## Development v2 provider SPI
+
+The v2 provider protocol accepts one candidate, task, matching requirements, and an
+explicit context, then returns generic `Fact` observations. Providers declare a stable
+ID, version, and supported fact types. Entry-point loading is opt in, duplicate IDs
+fail, emitted provider identity is framework-bound, provider errors remain operational
+errors, and a provider cannot return a final decision. Pre-established fact input is
+disabled unless both explicit mode and matching provider trust are configured. See
+[EXTENSIBILITY.md](EXTENSIBILITY.md).

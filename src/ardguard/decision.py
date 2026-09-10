@@ -57,6 +57,9 @@ def evaluate(
     ids = [candidate.resource_id for candidate in candidates]
     if len(ids) != len(set(ids)):
         raise ContractError("candidate identifiers must be unique")
+    ranks = [candidate.rank for candidate in candidates]
+    if len(ranks) != len(set(ranks)):
+        raise ContractError("candidate ranks must be unique")
     missing_checks = set(task.required_fact_types) - set(policy.required_checks)
     if missing_checks:
         names = ", ".join(sorted(item.value for item in missing_checks))

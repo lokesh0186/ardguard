@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import copy
 
+import pytest
+
 from ardguard.adapters import parse_search_response
 from ardguard.decision import evaluate
-from ardguard.models import CandidateVerdict, FactSet, Policy, TaskContract
+from ardguard.models import CandidateVerdict, ContractError, FactSet, Policy, TaskContract
 
 
 def test_all_scores_leave_eligibility_unchanged(fallback_documents) -> None:
@@ -25,7 +27,7 @@ def test_all_scores_leave_eligibility_unchanged(fallback_documents) -> None:
         assert decision.selected_candidate_id.endswith("rank-two")
 
 
-def test_equal_explicit_rank_has_stable_identity_tie_break(fallback_inputs) -> None:
+def test_equal_explicit_rank_is_rejected(fallback_inputs) -> None:
     candidates, task, policy, facts = fallback_inputs
     first = candidates[0].__class__(
         candidates[0].resource_id,
@@ -45,6 +47,5 @@ def test_equal_explicit_rank_has_stable_identity_tie_break(fallback_inputs) -> N
         candidates[1].metadata,
         candidates[1].original,
     )
-    forward = evaluate(candidates=(first, second), task=task, policy=policy, facts=facts)
-    reverse = evaluate(candidates=(second, first), task=task, policy=policy, facts=facts)
-    assert forward.to_dict() == reverse.to_dict()
+    with pytest.raises(ContractError, match="ranks must be unique"):
+        evaluate(candidates=(first, second), task=task, policy=policy, facts=facts)

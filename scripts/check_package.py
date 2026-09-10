@@ -25,15 +25,15 @@ BANNED_TEXT = (
     b"USENIX",
     b"HotCRP",
     b"4open.science",
-    b"U3R17",
-    b"U3R18",
-    b"U3R22",
+    b"U3R",
     b"/Users/",
+    b"/private/tmp",
+    b"anonymous artifact",
     b"\\Users\\",
 )
 WHEEL_PREFIXES = (
     "ardguard/",
-    "ardguard-0.1.0b2.dist-info/",
+    "ardguard-0.1.0b3.dist-info/",
 )
 SDIST_ALLOWED_ROOTS = {
     ".gitignore",
@@ -64,7 +64,10 @@ def _bad_path(name: str) -> bool:
 def _check_bytes(name: str, data: bytes) -> None:
     if any(marker in data for marker in BANNED_TEXT):
         raise ValueError(f"private or research text found in package member: {name}")
-    if re.search(rb"(?:ghp|github_pat|pypi)-[A-Za-z0-9_]{16,}", data):
+    if re.search(
+        rb"(?:gh[pousr]_[A-Za-z0-9_]{16,}|github_pat_[A-Za-z0-9_]{16,}|pypi-[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16})",
+        data,
+    ):
         raise ValueError(f"credential-like text found in package member: {name}")
 
 
@@ -75,8 +78,16 @@ def check_wheel(path: Path) -> None:
             raise ValueError(f"wheel contains banned path: {path}")
         if any(not name.startswith(WHEEL_PREFIXES) for name in names):
             raise ValueError(f"wheel contains a path outside the allowlist: {path}")
-        if not any(name == "ardguard/schemas/decision-v1.schema.json" for name in names):
-            raise ValueError("wheel omits packaged schemas")
+        required_schemas = {
+            "ardguard/schemas/decision-v1.schema.json",
+            "ardguard/schemas/decision-v2.schema.json",
+            "ardguard/schemas/fact-set-v2.schema.json",
+            "ardguard/schemas/policy-v2.schema.json",
+            "ardguard/schemas/task-contract-v2.schema.json",
+        }
+        missing_schemas = required_schemas - set(names)
+        if missing_schemas:
+            raise ValueError(f"wheel omits packaged schemas: {sorted(missing_schemas)}")
         for name in names:
             if not name.endswith("/"):
                 _check_bytes(name, archive.read(name))

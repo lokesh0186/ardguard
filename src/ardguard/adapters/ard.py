@@ -49,7 +49,9 @@ def _validate_referral(value: object, index: int) -> None:
     _absolute_uri(url, f"ARD referral {index}.url")
 
 
-def parse_search_response(document: object) -> tuple[Candidate, ...]:
+def parse_search_response(  # noqa: PLR0912 - exact ARD boundary validation
+    document: object,
+) -> tuple[Candidate, ...]:
     if not isinstance(document, Mapping):
         raise ContractError("ARD SearchResponse must be an object")
     unknown = sorted(set(document) - {"results", "referrals", "pageToken"})
@@ -58,6 +60,15 @@ def parse_search_response(document: object) -> tuple[Candidate, ...]:
     results = document.get("results")
     if not isinstance(results, list):
         raise ContractError("ARD SearchResponse.results must be an array")
+    for index, result in enumerate(results):
+        if not isinstance(result, Mapping):
+            raise ContractError(f"ARD result {index} must be an object")
+        if "identifier" not in result:
+            raise ContractError(f"ARD result {index} omits required field: identifier")
+        if "displayName" in result and (
+            not isinstance(result["displayName"], str) or not result["displayName"].strip()
+        ):
+            raise ContractError(f"ARD result {index}.displayName must be a non-empty string")
     candidates = tuple(
         Candidate.from_ard_result(row, rank=index) for index, row in enumerate(results, start=1)
     )
@@ -66,7 +77,17 @@ def parse_search_response(document: object) -> tuple[Candidate, ...]:
         raise ContractError("ARD SearchResponse contains duplicate identifiers")
     for candidate in candidates:
         _ard_identifier(candidate.resource_id, "search result.identifier")
-        _absolute_uri(candidate.source, "search result.source")
+        if candidate.source is not None:
+            _absolute_uri(candidate.source, "search result.source")
+        has_url = candidate.original.get("url") is not None
+        has_data = candidate.original.get("data") is not None
+        if has_url:
+            url = candidate.original["url"]
+            if not isinstance(url, str):
+                raise ContractError("search result.url must be a string")
+            _absolute_uri(url, "search result.url")
+        if has_data and not isinstance(candidate.original["data"], Mapping):
+            raise ContractError("search result.data must be an object")
     referrals = document.get("referrals", [])
     if not isinstance(referrals, list):
         raise ContractError("ARD SearchResponse.referrals must be an array")

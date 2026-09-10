@@ -153,19 +153,20 @@ class ProviderIdentity:
 @dataclass(frozen=True)
 class Candidate:
     resource_id: str
-    source: str
+    source: str | None
     rank: int
-    score: int
+    score: int | None
     media_type: str | None = None
     metadata: Mapping[str, Any] = field(default_factory=dict)
     original: Mapping[str, Any] = field(default_factory=dict, repr=False, compare=False)
 
     def __post_init__(self) -> None:
         _text(self.resource_id, "candidate.resource_id")
-        _text(self.source, "candidate.source")
+        if self.source is not None:
+            _text(self.source, "candidate.source")
         if isinstance(self.rank, bool) or not isinstance(self.rank, int) or self.rank < 1:
             raise ContractError("candidate rank must be a positive integer")
-        if (
+        if self.score is not None and (
             isinstance(self.score, bool)
             or not isinstance(self.score, int)
             or not 0 <= self.score <= MAX_ARD_SCORE
@@ -182,9 +183,16 @@ class Candidate:
     def from_ard_result(cls, value: object, *, rank: int) -> Candidate:
         row = _mapping(value, "search result")
         resource_id = _text(row.get("identifier"), "search result.identifier")
-        source = _text(row.get("source"), "search result.source")
+        source_value = row.get("source")
+        source = (
+            _text(source_value, "search result.source") if source_value is not None else None
+        )
         score = row.get("score")
-        if isinstance(score, bool) or not isinstance(score, int) or not 0 <= score <= MAX_ARD_SCORE:
+        if score is not None and (
+            isinstance(score, bool)
+            or not isinstance(score, int)
+            or not 0 <= score <= MAX_ARD_SCORE
+        ):
             raise ContractError("search result.score must be an integer from 0 through 100")
         if isinstance(rank, bool) or not isinstance(rank, int) or rank < 1:
             raise ContractError("candidate rank must be a positive integer")
@@ -541,7 +549,7 @@ class FactSet:
 class CandidateEvaluation:
     candidate_id: str
     rank: int
-    score: int
+    score: int | None
     verdict: CandidateVerdict
     reasons: tuple[ReasonCode, ...]
     providers: tuple[ProviderIdentity, ...]

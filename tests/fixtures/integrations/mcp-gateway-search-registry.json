@@ -1,0 +1,13 @@
+{
+  "servers": [
+    {"server_name": "weather", "path": "/weather", "relevance_score": 0.96, "matching_tools": [{"tool_name": "forecast", "relevance_score": 0.96}]}
+  ],
+  "tools": [
+    {"tool_name": "forecast", "server_name": "weather", "path": "/weather", "relevance_score": 0.96}
+  ],
+  "agents": [],
+  "skills": [],
+  "query": "weather forecast",
+  "total_results": 2,
+  "status": "success"
+}

@@ -38,6 +38,14 @@ jobs:
           --cov=ardguard.eligibility
           --cov=ardguard.decision
           --cov=ardguard.providers.evidence
+          --cov=ardguard.kernel
+          --cov=ardguard.constraints
+          --cov=ardguard.artifacts
+          --cov=ardguard.cache
+          --cov=ardguard.plugins
+          --cov=ardguard.providers.mcp
+          --cov=ardguard.providers.identity
+          --cov=ardguard.requirement_packs
           --cov-branch
           --cov-report=term-missing
           --cov-fail-under=90

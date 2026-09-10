@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/policy-v2.schema.json",
+  "title": "ARDGuard Policy v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "selection_mode", "indeterminate_action", "operational_error_action"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/policy/v2"},
+    "selection_mode": {"enum": ["fallback", "top-ranked-only"]},
+    "indeterminate_action": {"enum": ["DEFER", "ABSTAIN"]},
+    "operational_error_action": {"enum": ["ERROR", "DEFER", "ABSTAIN"]},
+    "preestablished_fact_mode": {"type": "boolean", "default": false},
+    "provider_trust": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["provider_id", "provider_version", "fact_types"],
+        "properties": {
+          "provider_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.:/-]{0,199}$"},
+          "provider_version": {"type": "string", "minLength": 1},
+          "fact_types": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.:/-]{0,199}(\\.\\*)?$"}
+          }
+        }
+      }
+    }
+  }
+}

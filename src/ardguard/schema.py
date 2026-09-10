@@ -16,6 +16,10 @@ SCHEMAS = {
     "facts": "fact-set-v1.schema.json",
     "policy": "policy-v1.schema.json",
     "decision": "decision-v1.schema.json",
+    "task-v2": "task-contract-v2.schema.json",
+    "facts-v2": "fact-set-v2.schema.json",
+    "policy-v2": "policy-v2.schema.json",
+    "decision-v2": "decision-v2.schema.json",
 }
 
 

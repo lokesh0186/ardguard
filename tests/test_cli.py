@@ -22,7 +22,7 @@ def run_cli(*arguments: str, cwd: Path | None = None) -> subprocess.CompletedPro
 def test_version() -> None:
     completed = run_cli("--version")
     assert completed.returncode == 0
-    assert completed.stdout.strip() == "ardguard 0.1.0b2"
+    assert completed.stdout.strip() == "ardguard 0.1.0b3"
 
 
 def test_demo_is_offline_and_does_not_invoke() -> None:
@@ -38,6 +38,9 @@ def test_demo_json_validates_and_has_fallback() -> None:
     value = json.loads(completed.stdout)
     assert value["selected_rank"] == 2
     assert value["reason"] == "selection.fallback_to_lower_ranked_eligible"
+    assert value["decision_sha256"] == (
+        "05da070ad17d2dc3c98d38d8ca0d4c5f2a6838b8e6f696f5e8463dde1e98593f"
+    )
 
 
 def test_evaluate_and_explain(tmp_path: Path) -> None:

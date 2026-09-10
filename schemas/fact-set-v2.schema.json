@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/fact-set-v2.schema.json",
+  "title": "ARDGuard FactSet v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "facts"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/fact-set/v2"},
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact_id", "candidate_id", "fact_type", "provider_id", "provider_version", "state", "value", "provenance"],
+        "properties": {
+          "fact_id": {"type": "string", "minLength": 1},
+          "candidate_id": {"type": "string", "minLength": 1},
+          "fact_type": {"type": "string", "pattern": "^[a-z][a-z0-9_.:/-]{0,199}$"},
+          "provider_id": {"type": "string", "pattern": "^[a-z][a-z0-9_.:/-]{0,199}$"},
+          "provider_version": {"type": "string", "minLength": 1},
+          "state": {"enum": ["AVAILABLE", "UNAVAILABLE", "INDETERMINATE", "OPERATIONAL_ERROR"]},
+          "value": {},
+          "provenance": {"type": "object"},
+          "source_identity": {"type": ["string", "null"]},
+          "evidence_identity": {"type": ["string", "null"]},
+          "observed_at": {"type": ["string", "null"]},
+          "expires_at": {"type": ["string", "null"]},
+          "extensions": {"type": "object"}
+        },
+        "allOf": [
+          {
+            "if": {"properties": {"state": {"not": {"const": "AVAILABLE"}}}},
+            "then": {"properties": {"value": {"type": "null"}}}
+          }
+        ]
+      }
+    }
+  }
+}

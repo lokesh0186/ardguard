@@ -1,6 +1,6 @@
 # Tested support matrix
 
-Beta 2 claims only the rows marked `SUPPORTED`.
+Beta 3 claims only the rows marked `SUPPORTED`.
 
 | Surface | Status | Qualified version or boundary |
 | --- | --- | --- |
@@ -19,5 +19,19 @@ Beta 2 claims only the rows marked `SUPPORTED`.
 | Automatic installation or invocation | `UNSUPPORTED` | Caller-owned by design |
 | Universal trust score | `UNSUPPORTED` | Not part of the product model |
 
-`ardguard support --json` emits the machine-readable subset used by compatibility
-checks. A new version is not claimed until a pinned fixture and CI coverage exist.
+Beta 3 adds the following deliberately scoped surfaces. They remain `EXPERIMENTAL`:
+
+| Surface | Status | Qualified boundary |
+| --- | --- | --- |
+| Generic TaskContract, FactSet, Policy, Decision | `EXPERIMENTAL` | Versioned v2 schemas |
+| Provider plugins | `EXPERIMENTAL` | Explicit `ardguard.fact_providers` entry points |
+| Generic constraints and policy packs | `EXPERIMENTAL` | Closed predicate set; no arbitrary code |
+| MCP introspection | `EXPERIMENTAL` | Read-only `initialize` and `tools/list` transport |
+| A2A, OpenAPI, and Skill artifacts | `EXPERIMENTAL` | Offline parsing only |
+| Neuronto SearchResponse | `EXPERIMENTAL` | Pinned response extension adapter |
+| Local HTTP service | `EXPERIMENTAL` | Versioned `/v1` API on loopback only |
+| JSON stdin/stdout | `EXPERIMENTAL` | One v2 bundle to one decision |
+| OpenARD and MCP Gateway Registry | `ADVISORY` | Pinned negative or shape fixtures only |
+
+`ardguard support --json` and `docs/support-matrix.json` provide machine-readable
+records. Fixture parsing does not imply full upstream integration support.

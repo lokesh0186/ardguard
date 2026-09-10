@@ -22,6 +22,16 @@ def test_examples_validate(fallback_documents) -> None:
     validate_document("facts", facts)
 
 
+def test_generic_examples_validate() -> None:
+    root = Path(__file__).resolve().parents[1] / "examples" / "generic"
+    for kind, filename in (
+        ("task-v2", "task.json"),
+        ("policy-v2", "policy.json"),
+        ("facts-v2", "facts.json"),
+    ):
+        validate_document(kind, json.loads((root / filename).read_text(encoding="utf-8")))
+
+
 def test_schema_rejects_final_eligibility(fallback_documents) -> None:
     _, _, _, facts = fallback_documents
     facts["observations"][0]["eligible"] = True

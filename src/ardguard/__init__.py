@@ -1,6 +1,23 @@
 """ARDGuard public API."""
 
+from ardguard._version import __version__
 from ardguard.decision import evaluate
+from ardguard.kernel import (
+    Fact,
+    FactOperationalState,
+    GenericDecision,
+    GenericFactSet,
+    GenericTaskContract,
+    KernelPolicy,
+    ProviderContext,
+    ProviderTrust,
+    Requirement,
+    RequirementMode,
+    RequirementStatus,
+    RequirementVerdict,
+    UnknownPolicy,
+    evaluate_kernel,
+)
 from ardguard.models import (
     Candidate,
     CandidateEvaluation,
@@ -17,21 +34,34 @@ from ardguard.models import (
     VerifierOutcome,
 )
 
-__version__ = "0.1.0b2"
-
 __all__ = [
     "Candidate",
     "CandidateEvaluation",
     "CandidateVerdict",
     "ContractError",
     "Decision",
+    "Fact",
+    "FactOperationalState",
     "FactSet",
     "FactType",
     "FinalDecision",
+    "GenericDecision",
+    "GenericFactSet",
+    "GenericTaskContract",
+    "KernelPolicy",
     "Observation",
     "ObservationState",
     "Policy",
+    "ProviderContext",
+    "ProviderTrust",
+    "Requirement",
+    "RequirementMode",
+    "RequirementStatus",
+    "RequirementVerdict",
     "TaskContract",
+    "UnknownPolicy",
     "VerifierOutcome",
+    "__version__",
     "evaluate",
+    "evaluate_kernel",
 ]

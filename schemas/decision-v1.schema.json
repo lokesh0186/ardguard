@@ -21,7 +21,7 @@
         "properties": {
           "candidate_id": {"type": "string", "minLength": 1},
           "rank": {"type": "integer", "minimum": 1},
-          "score": {"type": "integer", "minimum": 0, "maximum": 100},
+          "score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
           "verdict": {"enum": ["ELIGIBLE", "INELIGIBLE", "INDETERMINATE"]},
           "reasons": {"type": "array", "items": {"type": "string", "minLength": 1}},
           "providers": {

@@ -1,6 +1,6 @@
 # Security policy
 
-ARDGuard `0.1.0b2` is a Beta 2 prerelease. The deterministic decision core, closed
+ARDGuard `0.1.0b3` is a Beta 3 prerelease. The deterministic decision core, closed
 contracts, ARD v0.91 adapter, hf-discover 1.3.7 adapter, and static observation path are
 supported. The sandboxed offline verifier command provider is experimental.
 
@@ -47,3 +47,9 @@ before sharing.
 
 The detailed trust and failure model is in
 [`docs/SECURITY_MODEL.md`](docs/SECURITY_MODEL.md).
+
+Beta 3 v2 surfaces, including provider plugins, the MCP provider, URL resolution, and
+the loopback service, are experimental. Reports that let a plugin select directly,
+move a fact across candidate
+identities, reuse stale cache entries across artifact identities, carry secret values,
+or bind the service publicly are high priority.

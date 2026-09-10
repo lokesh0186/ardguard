@@ -1,0 +1,25 @@
+{
+  "queryMatch": {"coverage": "partial"},
+  "results": [
+    {
+      "identifier": "urn:air:neuronto.com:mcp:pdf-reader",
+      "displayName": "PDF Reader",
+      "type": "application/mcp-server-card+json",
+      "url": "https://neuronto.com/resources/pdf-reader.json",
+      "score": 94,
+      "source": "https://neuronto.com",
+      "verification": {"status": "observed"},
+      "matchedTool": "read_pdf"
+    },
+    {
+      "identifier": "urn:air:neuronto.com:mcp:document-reader",
+      "displayName": "Document Reader",
+      "type": "application/mcp-server-card+json",
+      "url": "https://neuronto.com/resources/document-reader.json",
+      "score": 87,
+      "source": "https://neuronto.com",
+      "verification": {"status": "observed"},
+      "matchedTool": "read_document"
+    }
+  ]
+}

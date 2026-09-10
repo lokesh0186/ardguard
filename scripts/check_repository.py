@@ -20,7 +20,9 @@ BANNED_TEXT = (
     "U3R21",
     "U3R22",
     "/Users/",
+    "/private/tmp",
     "anonymous artifact",
+    "manuscript",
 )
 
 
@@ -49,7 +51,10 @@ def main() -> int:
                 failures.append(f"banned text {marker!r}: {relative}")
         if "\N{EM DASH}" in text:
             failures.append(f"em dash: {relative}")
-        if re.search(r"(?:ghp|github_pat|pypi)-[A-Za-z0-9_]{16,}", text):
+        if re.search(
+            r"(?:gh[pousr]_[A-Za-z0-9_]{16,}|github_pat_[A-Za-z0-9_]{16,}|pypi-[A-Za-z0-9_]{16,}|AKIA[0-9A-Z]{16})",
+            text,
+        ):
             failures.append(f"credential-like text: {relative}")
     if failures:
         raise SystemExit("\n".join(sorted(failures)))

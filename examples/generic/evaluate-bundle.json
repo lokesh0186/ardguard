@@ -1,0 +1,23 @@
+{
+  "discovery": {
+    "results": [
+      {"identifier": "urn:air:example.org:service:west", "displayName": "West service", "type": "application/json", "url": "https://example.org/west.json", "score": 98, "source": "https://registry.example.org/"},
+      {"identifier": "urn:air:example.org:service:east", "displayName": "East service", "type": "application/json", "url": "https://example.org/east.json", "score": 91, "source": "https://registry.example.org/"}
+    ]
+  },
+  "task": {
+    "schema_version": "ardguard.dev/task-contract/v2",
+    "task_id": "region-bound-example",
+    "operation": "records.read",
+    "requirements": [{"requirement_id": "deployment-region", "requirement_type": "deployment.region", "parameters": {"predicate": "one_of", "expected": ["us-east-1"]}, "mode": "MANDATORY", "unknown_policy": "INDETERMINATE", "namespace": "https://ardguard.dev/facts/deployment/v1", "schema_identity": "ardguard.dev/constraint/v1"}],
+    "context": {}
+  },
+  "policy": {"schema_version": "ardguard.dev/policy/v2", "selection_mode": "fallback", "indeterminate_action": "DEFER", "operational_error_action": "ERROR", "preestablished_fact_mode": true, "provider_trust": [{"provider_id": "example.region-provider", "provider_version": "1", "fact_types": ["deployment.region"]}]},
+  "facts": {
+    "schema_version": "ardguard.dev/fact-set/v2",
+    "facts": [
+      {"fact_id": "region-west", "candidate_id": "urn:air:example.org:service:west", "fact_type": "deployment.region", "provider_id": "example.region-provider", "provider_version": "1", "state": "AVAILABLE", "value": "us-west-2", "provenance": {}, "source_identity": null, "observed_at": null, "expires_at": null, "extensions": {}},
+      {"fact_id": "region-east", "candidate_id": "urn:air:example.org:service:east", "fact_type": "deployment.region", "provider_id": "example.region-provider", "provider_version": "1", "state": "AVAILABLE", "value": "us-east-1", "provenance": {}, "source_identity": null, "observed_at": null, "expires_at": null, "extensions": {}}
+    ]
+  }
+}

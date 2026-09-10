@@ -18,6 +18,7 @@ from ardguard.adapters.ard import parse_search_response
 from ardguard.adapters.hf_discover import compatibility_record as hf_compatibility
 from ardguard.adapters.hf_discover import parse_hf_discover_response
 from ardguard.decision import evaluate
+from ardguard.kernel import GenericFactSet, GenericTaskContract, KernelPolicy, evaluate_kernel
 from ardguard.models import (
     ContractError,
     Decision,
@@ -27,8 +28,11 @@ from ardguard.models import (
     TaskContract,
     canonical_json,
 )
+from ardguard.packs import POLICY_PACKS, builtin_evaluators
+from ardguard.plugins import discover_fact_provider_metadata
 from ardguard.reasons import REASON_DEFINITIONS, ReasonCode
 from ardguard.schema import validate_document
+from ardguard.service import serve
 
 MAX_INPUT_BYTES = 10 * 1024 * 1024
 
@@ -206,6 +210,25 @@ def _evaluate_documents(
     )
 
 
+def _evaluate_v2_bundle(value: object) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise ContractError("stdin evaluation bundle must be an object")
+    if set(value) != {"discovery", "task", "policy", "facts"}:
+        raise ContractError("stdin bundle requires discovery, task, policy, and facts")
+    task = GenericTaskContract.from_mapping(value["task"])
+    policy = KernelPolicy.from_mapping(value["policy"])
+    facts = GenericFactSet.from_mapping(value["facts"])
+    candidates = parse_search_response(value["discovery"])
+    evaluators = builtin_evaluators(tuple(item.requirement_type for item in task.requirements))
+    return evaluate_kernel(
+        candidates=candidates,
+        task=task,
+        policy=policy,
+        fact_set=facts,
+        evaluators=evaluators,
+    ).to_dict()
+
+
 def _cmd_demo(args: argparse.Namespace) -> int:
     discovery, task, policy, facts = _demo_documents()
     decision = _evaluate_documents(discovery, task, policy, facts, "ard")
@@ -228,10 +251,25 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
     payload = {
         "ardguard_version": __version__,
         "python": sys.version.split()[0],
-        "schemas": sorted(("task", "facts", "policy", "decision")),
+        "schemas": sorted(
+            (
+                "task",
+                "facts",
+                "policy",
+                "decision",
+                "task-v2",
+                "facts-v2",
+                "policy-v2",
+                "decision-v2",
+            )
+        ),
         "adapters": [ard_compatibility(), hf_compatibility()],
         "automatic_invocation": False,
         "implicit_network": False,
+        "plugin_entry_point": "ardguard.fact_providers",
+        "installed_provider_plugins": discover_fact_provider_metadata(),
+        "policy_packs": sorted(POLICY_PACKS),
+        "installed_plugins": discover_fact_provider_metadata(),
         "optional_evidence_sandbox": "/usr/bin/sandbox-exec"
         if sys.platform == "darwin"
         else "unshare --net",
@@ -250,7 +288,16 @@ def _cmd_doctor(args: argparse.Namespace) -> int:
 
 def _cmd_validate(args: argparse.Namespace) -> int:
     value = _read_json(args.file)
-    if args.kind in {"task", "facts", "policy", "decision"}:
+    if args.kind in {
+        "task",
+        "facts",
+        "policy",
+        "decision",
+        "task-v2",
+        "facts-v2",
+        "policy-v2",
+        "decision-v2",
+    }:
         validate_document(args.kind, value)
     elif args.kind == "ard":
         parse_search_response(value)
@@ -261,6 +308,20 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 
 
 def _cmd_evaluate(args: argparse.Namespace) -> int:
+    if args.stdin:
+        value = _read_json("-")
+        result = _evaluate_v2_bundle(value)
+        _write_json(result, args.output, force=args.force)
+        return {
+            "SELECT": 0,
+            "ABSTAIN": 1,
+            "DEFER": 3,
+            "ERROR": 4,
+        }[result["outcome"]]
+    if not all((args.discovery_response, args.task, args.policy, args.facts)):
+        raise ContractError(
+            "file mode requires --discovery-response, --task, --policy, and --facts"
+        )
     decision = _evaluate_documents(
         _read_json(args.discovery_response),
         _read_json(args.task),
@@ -279,19 +340,26 @@ def _cmd_evaluate(args: argparse.Namespace) -> int:
 
 def _cmd_explain(args: argparse.Namespace) -> int:
     value = _read_json(args.decision)
-    validate_document("decision", value)
     if not isinstance(value, dict):
         raise ContractError("decision must be an object")
+    schema = value.get("schema_version")
+    validate_document("decision-v2" if schema == "ardguard.dev/decision/v2" else "decision", value)
     supplied_hash = value["decision_sha256"]
     body = {key: item for key, item in value.items() if key != "decision_sha256"}
     actual_hash = hashlib.sha256(canonical_json(body)).hexdigest()
     if supplied_hash != actual_hash:
         raise ContractError("decision_sha256 does not match the decision body")
     selected = value["selected_candidate_id"] or "none"
-    definition = REASON_DEFINITIONS[ReasonCode(value["reason"])]
+    reason = value.get("reason_code", value.get("reason"))
+    if not isinstance(reason, str):
+        raise ContractError("decision reason code is missing")
+    try:
+        meaning = REASON_DEFINITIONS[ReasonCode(reason)].meaning
+    except ValueError:
+        meaning = "A versioned requirement or selection rule produced this reason."
     sys.stdout.write(
-        f"decision: {value['outcome']}\nselected: {selected}\nreason: {value['reason']}\n"
-        f"meaning: {definition.meaning}\ninvocation: NOT PERFORMED\n"
+        f"decision: {value['outcome']}\nselected: {selected}\nreason: {reason}\n"
+        f"meaning: {meaning}\ninvocation: NOT PERFORMED\n"
     )
     return 0
 
@@ -308,6 +376,11 @@ def _cmd_support(args: argparse.Namespace) -> int:
         },
         "kubernetes_provider": {"status": "ADVISORY", "included": False},
         "automatic_invocation": {"status": "UNSUPPORTED"},
+        "generic_requirements": {"status": "EXPERIMENTAL", "schema": "v2"},
+        "provider_plugins": {"status": "EXPERIMENTAL", "entry_point": "ardguard.fact_providers"},
+        "mcp_introspection": {"status": "EXPERIMENTAL", "operations": ["initialize", "tools/list"]},
+        "a2a_openapi_skill": {"status": "EXPERIMENTAL", "mode": "offline artifact parsing"},
+        "http_sidecar": {"status": "EXPERIMENTAL", "bind": "127.0.0.1"},
     }
     if args.json:
         _write_json(payload, None)
@@ -323,6 +396,33 @@ def _cmd_support(args: argparse.Namespace) -> int:
 
 def _cmd_adapters(args: argparse.Namespace) -> int:
     _write_json({"adapters": [ard_compatibility(), hf_compatibility()]}, None)
+    return 0
+
+
+def _cmd_providers(args: argparse.Namespace) -> int:
+    payload = {
+        "entry_point_group": "ardguard.fact_providers",
+        "automatic_loading": False,
+        "built_in": [
+            {
+                "provider_id": "ardguard.offline-evidence",
+                "status": "EXPERIMENTAL",
+                "network": "DENIED",
+            },
+            {
+                "provider_id": "ardguard.mcp-introspection",
+                "status": "EXPERIMENTAL",
+                "network": "EXPLICIT",
+            },
+        ],
+        "policy_packs": sorted(POLICY_PACKS),
+    }
+    _write_json(payload, None)
+    return 0
+
+
+def _cmd_serve(args: argparse.Namespace) -> int:
+    serve(host=args.host, port=args.port)
     return 0
 
 
@@ -344,7 +444,18 @@ def _parser() -> argparse.ArgumentParser:
     validate = subparsers.add_parser("validate", help="validate an input document")
     validate.add_argument(
         "--kind",
-        choices=("task", "facts", "policy", "decision", "ard", "hf-discover"),
+        choices=(
+            "task",
+            "facts",
+            "policy",
+            "decision",
+            "task-v2",
+            "facts-v2",
+            "policy-v2",
+            "decision-v2",
+            "ard",
+            "hf-discover",
+        ),
         required=True,
     )
     validate.add_argument("file")
@@ -353,10 +464,14 @@ def _parser() -> argparse.ArgumentParser:
     evaluate_parser = subparsers.add_parser(
         "evaluate", help="derive a deterministic final decision"
     )
-    evaluate_parser.add_argument("--discovery-response", required=True)
-    evaluate_parser.add_argument("--task", required=True)
-    evaluate_parser.add_argument("--policy", required=True)
-    evaluate_parser.add_argument("--facts", required=True)
+    evaluate_parser.add_argument("--discovery-response")
+    evaluate_parser.add_argument("--task")
+    evaluate_parser.add_argument("--policy")
+    evaluate_parser.add_argument("--facts")
+    evaluate_parser.add_argument(
+        "--stdin", action="store_true", help="read one v2 evaluation bundle from stdin"
+    )
+    evaluate_parser.add_argument("--json", action="store_true", help="emit deterministic JSON")
     evaluate_parser.add_argument("--adapter", choices=("ard", "hf-discover"), default="ard")
     evaluate_parser.add_argument("--output", default="-")
     evaluate_parser.add_argument("--force", action="store_true")
@@ -372,6 +487,18 @@ def _parser() -> argparse.ArgumentParser:
 
     adapters = subparsers.add_parser("adapters", help="print adapter compatibility records")
     adapters.set_defaults(handler=_cmd_adapters)
+
+    providers = subparsers.add_parser("providers", help="inspect provider extension support")
+    providers_sub = providers.add_subparsers(dest="providers_command", required=True)
+    providers_list = providers_sub.add_parser(
+        "list", help="list built-in and plugin provider boundaries"
+    )
+    providers_list.set_defaults(handler=_cmd_providers)
+
+    serve_parser = subparsers.add_parser("serve", help="run the loopback-only JSON service")
+    serve_parser.add_argument("--host", default="127.0.0.1")
+    serve_parser.add_argument("--port", type=int, default=8765)
+    serve_parser.set_defaults(handler=_cmd_serve)
     return parser
 
 

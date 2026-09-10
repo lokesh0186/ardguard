@@ -8,8 +8,9 @@ from ardguard.models import CandidateEvaluation, CandidateVerdict, SelectionMode
 def ranked(evaluations: tuple[CandidateEvaluation, ...]) -> tuple[CandidateEvaluation, ...]:
     """Return deterministic backend-rank order.
 
-    Resource identity is only a deterministic tie-breaker when a caller supplies the
-    same explicit rank more than once. ARDGuard never changes or manufactures scores.
+    Candidate ranks are required to be unique by the public evaluation APIs. Resource
+    identity is a defensive deterministic tie-breaker for internal use only. ARDGuard
+    never changes or manufactures scores.
     """
 
     return tuple(sorted(evaluations, key=lambda item: (item.rank, item.candidate_id)))

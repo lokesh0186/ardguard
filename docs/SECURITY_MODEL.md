@@ -9,21 +9,25 @@ treated as capability, evidence, authority, or trust.
 ## Trusted components
 
 - The operator controls the task contract and policy.
-- Configured fact providers are trusted to establish the observations they claim.
+- Only explicitly enabled providers authorized by exact ID, version, and fact namespace
+  are trusted to establish the observations they claim.
 - The caller supplies the intended candidate set and preserves the returned decision
   before invoking anything.
 - Cryptographic verifier roots and signer policies are deployment-specific trusted
   configuration.
 - The local Python interpreter and operating system are not malicious.
 
-A static FactSet is appropriate for replay, tests, and observations obtained through a
-trusted transport. It is not a proof that an untrusted caller measured those facts.
+A static FactSet is accepted only in explicit pre-established-fact mode with matching
+provider trust. It is appropriate for replay, tests, and observations obtained through
+a trusted transport. It is not proof that an untrusted caller measured those facts.
 
 ## Untrusted or uncertain inputs
 
 - Discovery metadata, descriptions, tags, scores, and advertised capabilities do not
   establish eligibility.
 - A fact cannot contain `eligible` or a candidate verdict. ARDGuard derives both.
+- Generic facts reject common secret-bearing keys. Access facts describe credential
+  categories and availability, never token or key values.
 - Missing facts do not pass.
 - An unavailable provider does not pass.
 - An operational verifier error is distinct from cryptographic invalidity.
@@ -38,8 +42,10 @@ produce `INDETERMINATE`. Policy may convert indeterminacy to `DEFER` or `ABSTAIN
 convert a provider operational error to `DEFER`, `ABSTAIN`, or `ERROR`. It cannot convert
 uncertainty into `SELECT`.
 
-Malformed JSON, duplicate keys, unknown contract fields, duplicate candidate/fact
-observations, invalid digests, and omitted task-required checks are rejected.
+Malformed JSON, duplicate keys, unknown contract fields, duplicate candidate or fact
+identifiers, duplicate explicit ranks, invalid digests, and omitted task-required checks
+are rejected. Multiple distinctly identified facts are retained. Unresolved conflicts
+produce a deterministic indeterminate result rather than a vote.
 
 ## Evidence execution
 
@@ -74,6 +80,22 @@ atomic replace. It does not traverse candidate URLs or paths.
 The core and CLI make no network request and emit no telemetry. Discovery is performed
 before ARDGuard. The experimental evidence provider refuses to run without a supported
 network-denying sandbox and uses verifier offline mode.
+
+The v2 URL artifact resolver requires explicit network enablement, exact host
+allowlisting, size and timeout limits, redirect revalidation, public peer-IP validation,
+and proxy opt-in. Credential-bearing URLs and local, private, link-local, reserved, and
+metadata-service targets fail closed by default. Core provides no implicit HTTP
+transport. Injected transports must enforce the byte limit while streaming and after
+decompression. The MCP provider is read-only and exposes only `initialize`
+and `tools/list`; it never calls a tool. The local decision service binds only to
+loopback, validates local Host headers, applies a 10-second connection timeout, limits
+request bodies to 10 MiB, enables no plugins or network providers by default, sends no
+permissive CORS header, and has no telemetry.
+
+Third-party provider Python code executes inside the application trust boundary.
+Entry-point discovery does not imply loading. Operators must explicitly enable a
+provider and trust its package, identity, and transport. Provider output is revalidated,
+bound to the requested candidate, and cannot directly issue `SELECT`.
 
 ## Out of scope
 

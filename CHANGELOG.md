@@ -3,6 +3,33 @@
 All notable changes follow Keep a Changelog conventions. Versions follow semantic
 versioning with Python prerelease identifiers.
 
+## [Unreleased]
+
+## [0.1.0b3] - 2026-09-10
+
+### Added
+
+- Versioned v2 requirement, fact, provider, evaluator, and decision contracts.
+- Opt-in fact-provider entry points and a working third-party provider example.
+- Closed generic constraints, content-addressed decision receipts, and identity-bound
+  fact caching.
+- Explicit artifact resolution policy, generalized evidence fact composition, a
+  deterministic publisher-identity pack, and bounded dependency evaluation.
+- Experimental read-only MCP introspection plus A2A, OpenAPI, Skill, and Neuronto
+  parsing boundaries.
+- JSON stdin/stdout evaluation and a loopback-only versioned HTTP API.
+
+### Security
+
+- Requires explicit provider ID, version, and fact-namespace trust for v2 facts.
+- Rejects provider identity spoofing, conflicting facts without policy precedence,
+  unsafe diagnostics, duplicate explicit ranks, and prohibited URL-resolution targets.
+
+### Compatibility
+
+- Accepts sparse ARD v0.91 Search results whose only required field is `identifier`.
+- Beta 2 v1 JSON, CLI, reason codes, and decision hash fixtures remain unchanged.
+
 ## [0.1.0b2] - 2026-09-10
 
 ### Changed

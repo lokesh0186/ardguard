@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ardguard.dev/schemas/decision-v2.schema.json",
+  "title": "ARDGuard Decision v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "outcome", "selected_candidate_id", "selected_rank", "reason_code", "evaluations", "receipt", "decision_sha256"],
+  "properties": {
+    "schema_version": {"const": "ardguard.dev/decision/v2"},
+    "task_id": {"type": "string"},
+    "outcome": {"enum": ["SELECT", "DEFER", "ABSTAIN", "ERROR"]},
+    "selected_candidate_id": {"type": ["string", "null"]},
+    "selected_rank": {"type": ["integer", "null"], "minimum": 1},
+    "reason_code": {"type": "string"},
+    "evaluations": {"type": "array"},
+    "receipt": {"type": "object"},
+    "decision_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

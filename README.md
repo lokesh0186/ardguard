@@ -13,12 +13,12 @@ capability, evidence, and authority observations, and selects the highest-ranked
 eligible resource or returns an explicit defer, abstain, or error decision. It never
 installs or invokes the selected resource.
 
-> **Status:** `0.1.0b2` Beta 2. The deterministic core and static observation path are
-> supported. The sandboxed PyPI and Sigstore command provider is experimental. See the
-> [support matrix](docs/SUPPORTED_SCOPE.md) before production use.
+> **Status:** `0.1.0b3` Beta 3. The deterministic v1 path remains supported. The
+> extensible v2 kernel and its protocol packs are experimental. See the [support
+> matrix](docs/SUPPORTED_SCOPE.md) before production use.
 
 ```bash
-python -m pip install ardguard==0.1.0b2
+python -m pip install ardguard==0.1.0b3
 ardguard demo
 ```
 
@@ -142,6 +142,16 @@ evidence for artifact A never makes candidate B eligible.
 | `ardguard explain` | Validate the decision hash and explain its reason. |
 | `ardguard support` | Print the tested support matrix. |
 | `ardguard adapters` | Print exact adapter compatibility records. |
+| `ardguard providers list` | Describe provider and policy-pack extension boundaries. |
+| `ardguard serve` | Run the experimental loopback-only JSON decision service. |
+
+## Extensible kernel
+
+Beta 3 includes an experimental v2 kernel for third-party fact types, typed
+requirements, decision receipts, stdin/stdout integration, and a loopback HTTP API.
+Beta 2 v1 contracts remain unchanged. Start with the existing commands above;
+advanced integrators can read the [extensibility guide](docs/EXTENSIBILITY.md) and
+[eligibility-pack matrix](docs/ELIGIBILITY_PACKS.md).
 
 ## Documentation
 
@@ -151,6 +161,8 @@ evidence for artifact A never makes candidate B eligible.
 - [Supported scope](docs/SUPPORTED_SCOPE.md)
 - [Decision and reason codes](docs/DECISIONS.md)
 - [Fact providers](docs/FACT_PROVIDERS.md)
+- [Extensible kernel](docs/EXTENSIBILITY.md)
+- [Eligibility packs](docs/ELIGIBILITY_PACKS.md)
 - [ARD v0.91 compatibility](docs/ARD_COMPATIBILITY.md)
 - [hf-discover integration](docs/HF_DISCOVER.md)
 - [Evidence](docs/EVIDENCE.md)
