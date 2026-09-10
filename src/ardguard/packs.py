@@ -146,7 +146,7 @@ def evaluate_evidence(
     }
     for identity in evidence_identities:
         rows = tuple(item for item in available if item.evidence_identity == identity)
-        if len({canonical_json(item.value) for item in rows}) > 1:
+        if len({canonical_json(item.to_dict()["value"]) for item in rows}) > 1:
             return RequirementVerdict(
                 requirement.requirement_id,
                 RequirementStatus.INDETERMINATE,
@@ -220,7 +220,7 @@ def evaluate_evidence_bundle(
     conflicting = tuple(
         item
         for rows in grouped.values()
-        if len({canonical_json(item.value) for item in rows}) > 1
+        if len({canonical_json(item.to_dict()["value"]) for item in rows}) > 1
         for item in rows
     )
     if conflicting:

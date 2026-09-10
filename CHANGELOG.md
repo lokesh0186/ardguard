@@ -5,6 +5,20 @@ versioning with Python prerelease identifiers.
 
 ## [Unreleased]
 
+## [0.1.0b4] - 2026-09-10
+
+### Fixed
+
+- Canonicalize the public JSON representation of structured evidence facts before
+  conflict comparison. Beta 3 could otherwise raise `TypeError` when an evidence fact
+  had a non-null evidence identity and a structured value.
+
+### Compatibility
+
+- No public API, schema, provider, ranking, fallback, or successful decision behavior
+  changes. Inputs affected by the defect now produce the documented evidence verdict
+  instead of an operational exception.
+
 ## [0.1.0b3] - 2026-09-10
 
 ### Added

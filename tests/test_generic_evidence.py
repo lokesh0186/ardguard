@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ardguard.kernel import Fact, FactOperationalState, Requirement, RequirementStatus
-from ardguard.packs import evaluate_evidence_bundle
+from ardguard.packs import evaluate_evidence, evaluate_evidence_bundle
 
 CANDIDATE = "urn:air:example.org:tool:reader"
 DIGEST = "a" * 64
@@ -117,3 +117,42 @@ def test_conflicting_same_type_evidence_facts_are_indeterminate() -> None:
     verdict = evaluate_evidence_bundle(requirement(), tuple(rows), context())
     assert verdict.status is RequirementStatus.INDETERMINATE
     assert verdict.reason_code == "evidence.conflicting_facts"
+
+
+def test_structured_evidence_identity_is_canonicalized_before_conflict_check() -> None:
+    aggregate_requirement = Requirement(
+        "aggregate-evidence",
+        "evidence",
+        {
+            "artifact_digest_field": "artifact_sha256",
+            "trusted_signers": ["https://example.org/publisher"],
+            "accepted_predicate_types": ["https://example.org/predicate/publish/v1"],
+        },
+    )
+    aggregate = Fact(
+        "aggregate-fact",
+        CANDIDATE,
+        "evidence",
+        "provider.evidence",
+        "1",
+        FactOperationalState.AVAILABLE,
+        {
+            "authentic": True,
+            "trust_valid": True,
+            "resource_id": CANDIDATE,
+            "artifact_sha256": DIGEST,
+            "subject_sha256": [DIGEST],
+            "signer_identity": "https://example.org/publisher",
+            "predicate_types": ["https://example.org/predicate/publish/v1"],
+        },
+        evidence_identity="fixture:aggregate",
+    )
+
+    verdict = evaluate_evidence(
+        aggregate_requirement,
+        (aggregate,),
+        context(),
+    )
+
+    assert verdict.status is RequirementStatus.SATISFIED
+    assert verdict.reason_code == "evidence.applicable"

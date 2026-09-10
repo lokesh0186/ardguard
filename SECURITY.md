@@ -1,6 +1,6 @@
 # Security policy
 
-ARDGuard `0.1.0b3` is a Beta 3 prerelease. The deterministic decision core, closed
+ARDGuard `0.1.0b4` is a Beta 3 patch prerelease. The deterministic decision core, closed
 contracts, ARD v0.91 adapter, hf-discover 1.3.7 adapter, and static observation path are
 supported. The sandboxed offline verifier command provider is experimental.
 

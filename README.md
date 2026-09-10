@@ -13,12 +13,12 @@ capability, evidence, and authority observations, and selects the highest-ranked
 eligible resource or returns an explicit defer, abstain, or error decision. It never
 installs or invokes the selected resource.
 
-> **Status:** `0.1.0b3` Beta 3. The deterministic v1 path remains supported. The
-> extensible v2 kernel and its protocol packs are experimental. See the [support
-> matrix](docs/SUPPORTED_SCOPE.md) before production use.
+> **Status:** `0.1.0b4` Beta 3 patch release. The deterministic v1 path remains
+> supported. The extensible v2 kernel and its protocol packs are experimental. See the
+> [support matrix](docs/SUPPORTED_SCOPE.md) before production use.
 
 ```bash
-python -m pip install ardguard==0.1.0b3
+python -m pip install ardguard==0.1.0b4
 ardguard demo
 ```
 
