@@ -33,7 +33,7 @@ BANNED_TEXT = (
 )
 WHEEL_PREFIXES = (
     "ardguard/",
-    "ardguard-0.1.0b1.dist-info/",
+    "ardguard-0.1.0b2.dist-info/",
 )
 SDIST_ALLOWED_ROOTS = {
     ".gitignore",

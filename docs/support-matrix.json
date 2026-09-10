@@ -1,6 +1,6 @@
 {
   "schema_version": "ardguard.dev/support-matrix/v1",
-  "product_version": "0.1.0b1",
+  "product_version": "0.1.0b2",
   "records": [
     {"surface": "python", "status": "SUPPORTED", "versions": ["3.10", "3.11", "3.12", "3.13"]},
     {"surface": "ard", "status": "SUPPORTED", "version": "v0.91", "commit": "aa3e598bb7752a9175897823234311216acfa864"},

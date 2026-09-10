@@ -12,12 +12,12 @@ capability, evidence, and authority observations, and selects the highest-ranked
 eligible resource or returns an explicit defer, abstain, or error decision. It never
 installs or invokes the selected resource.
 
-> **Status:** `0.1.0b1` Beta 1. The deterministic core and static observation path are
+> **Status:** `0.1.0b2` Beta 2. The deterministic core and static observation path are
 > supported. The sandboxed PyPI and Sigstore command provider is experimental. See the
 > [support matrix](docs/SUPPORTED_SCOPE.md) before production use.
 
 ```bash
-python -m pip install ardguard==0.1.0b1
+python -m pip install ardguard==0.1.0b2
 ardguard demo
 ```
 

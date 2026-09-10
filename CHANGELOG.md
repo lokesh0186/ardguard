@@ -3,6 +3,18 @@
 All notable changes follow Keep a Changelog conventions. Versions follow semantic
 versioning with Python prerelease identifiers.
 
+## [0.1.0b2] - 2026-09-10
+
+### Changed
+
+- Refreshed and schema-validated `CITATION.cff` metadata for software archival.
+- Added release-specific archival notes for the Zenodo-enabled GitHub release path.
+
+### Compatibility
+
+- No runtime decision, public API, schema, provider, adapter, or policy behavior changed
+  from `0.1.0b1`.
+
 ## [0.1.0b1] - 2026-09-09
 
 ### Added

@@ -1,12 +1,13 @@
 cff-version: 1.2.0
-message: "Citation metadata for the ARDGuard software release."
+message: "If you use ARDGuard, please cite the software version you used."
 title: ARDGuard
 authors:
   - family-names: Chauhan
     given-names: Lokesh
     orcid: "https://orcid.org/0009-0004-1544-6424"
 type: software
-version: 0.1.0b1
+version: 0.1.0b2
+date-released: 2026-09-10
 license: Apache-2.0
 repository-code: "https://github.com/lokesh0186/ardguard"
 url: "https://github.com/lokesh0186/ardguard"

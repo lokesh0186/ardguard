@@ -22,7 +22,7 @@ def run_cli(*arguments: str, cwd: Path | None = None) -> subprocess.CompletedPro
 def test_version() -> None:
     completed = run_cli("--version")
     assert completed.returncode == 0
-    assert completed.stdout.strip() == "ardguard 0.1.0b1"
+    assert completed.stdout.strip() == "ardguard 0.1.0b2"
 
 
 def test_demo_is_offline_and_does_not_invoke() -> None:

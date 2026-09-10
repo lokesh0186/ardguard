@@ -1,6 +1,6 @@
 # Tested support matrix
 
-Beta 1 claims only the rows marked `SUPPORTED`.
+Beta 2 claims only the rows marked `SUPPORTED`.
 
 | Surface | Status | Qualified version or boundary |
 | --- | --- | --- |

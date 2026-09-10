@@ -94,5 +94,5 @@ jobs:
         run: >-
           gh release create "${GITHUB_REF_NAME}" dist/* release/SHA256SUMS
           --title "ARDGuard ${GITHUB_REF_NAME#v}"
-          --notes-file docs/RELEASE_NOTES_0.1.0b1.md
+          --notes-file docs/RELEASE_NOTES_0.1.0b2.md
           --prerelease

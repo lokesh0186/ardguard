@@ -3,7 +3,7 @@
 Least authority is an operator-defined eligibility profile. It is not a normative ARD
 requirement and ARDGuard does not infer a universal privilege order.
 
-The Beta 1 contract uses exact permission sets:
+The Beta 2 contract uses exact permission sets:
 
 - `required_permissions` lists what the task must be able to do;
 - `maximum_permissions` lists every permission the operator permits;

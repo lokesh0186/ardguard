@@ -1,6 +1,6 @@
 # hf-discover integration
 
-Beta 1 is qualified against hf-discover 1.3.7 at commit
+Beta 2 is qualified against hf-discover 1.3.7 at commit
 `49c927439fcaa8f210cfd42186c0641acef579fa`.
 
 ```bash

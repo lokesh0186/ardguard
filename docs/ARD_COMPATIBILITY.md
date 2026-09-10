@@ -1,6 +1,6 @@
 # ARD compatibility
 
-Beta 1 is qualified against ARD v0.91 at commit
+Beta 2 is qualified against ARD v0.91 at commit
 `aa3e598bb7752a9175897823234311216acfa864`.
 
 Supported SearchResponse behavior:
