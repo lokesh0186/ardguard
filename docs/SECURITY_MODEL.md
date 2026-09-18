@@ -97,6 +97,14 @@ Entry-point discovery does not imply loading. Operators must explicitly enable a
 provider and trust its package, identity, and transport. Provider output is revalidated,
 bound to the requested candidate, and cannot directly issue `SELECT`.
 
+## DecisionReceipt privacy
+
+A production receipt can reveal candidate identities, original ranks and scores, task
+requirements, provider identities, fact provenance, and policy structure. Receipts are
+operator audit records, not automatically public artifacts. Keep them within the
+deployment's audit boundary unless the contents have been reviewed and appropriately
+redacted. The public Decision Explorer uses synthetic candidates and facts only.
+
 ## Out of scope
 
 - A malicious local interpreter, kernel, root user, or same-UID process.

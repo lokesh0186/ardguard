@@ -1,0 +1,289 @@
+{
+  "decision": {
+    "decision_sha256": "a38448d0b56e5f828090def517a6e0c7d80e559b55b5ded6ea44e9d2c03fc64a",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "capability-1"
+            ],
+            "reason_code": "capability.verified",
+            "requirement_id": "required-capability",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 98,
+        "status": "SATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "capability-2"
+            ],
+            "reason_code": "capability.verified",
+            "requirement_id": "required-capability",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "SATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-c",
+        "rank": 3,
+        "requirements": [
+          {
+            "fact_ids": [
+              "capability-3"
+            ],
+            "reason_code": "capability.mismatch",
+            "requirement_id": "required-capability",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 84,
+        "status": "UNSATISFIED"
+      }
+    ],
+    "outcome": "SELECT",
+    "reason_code": "selection.top_ranked_eligible",
+    "receipt": {
+      "candidate_set_sha256": "45cf109cfee25fae89faf4b64dd4912bbc8934f66885470c30fc8f43dccb33c2",
+      "fact_sha256": [
+        "def7e236bd4a0964c5efef014fd7c2d0b96cdf8ba70b344e5eea829c0e6fb7b8",
+        "d428676455eed7ff88cf75eea3555576fa98fa9a8c2630055b95899c2e88a3a9",
+        "02b1a39198067e25242764cad3f6624ca5660a5dd44a2d7d11f3c315a5acc1c6"
+      ],
+      "policy_sha256": "45998a405848233f69429b846a578439b727f2fe301c32640ad0f05a4af2243c",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "2ee1f5e620223bf9f910e3d553fe7f532ff17f328315bd2f26405b3d721bb75b",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "capability-1"
+          ],
+          "reason_code": "capability.verified",
+          "requirement_id": "required-capability",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "capability-2"
+          ],
+          "reason_code": "capability.verified",
+          "requirement_id": "required-capability",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "capability-3"
+          ],
+          "reason_code": "capability.mismatch",
+          "requirement_id": "required-capability",
+          "status": "UNSATISFIED"
+        }
+      ],
+      "selected_candidate_id": "urn:air:example.org:service:server-a",
+      "software_version": "0.1.0b4",
+      "task_sha256": "b4c1526b68173a971c84d850679ac9c4d5ef13f9eea046c2a724c494be146860"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": "urn:air:example.org:service:server-a",
+    "selected_rank": 1,
+    "task_id": "explorer-multiple-eligible-preserve-rank"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "SATISFIED",
+        "evidence": "Verified",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": true
+      },
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "SATISFIED",
+        "evidence": "Verified",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": false
+      },
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-c",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Capability mismatch",
+        "label": "Server C",
+        "rank": 3,
+        "score": 84,
+        "selected": false
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "multiple-eligible-preserve-rank",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        },
+        {
+          "displayName": "Server C",
+          "identifier": "urn:air:example.org:service:server-c",
+          "metadata": {
+            "artifact_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "score": 84,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-c.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "capability-1",
+          "fact_type": "capability",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "verified_capabilities": [
+              "records.read"
+            ]
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "capability-2",
+          "fact_type": "capability",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "verified_capabilities": [
+              "records.read"
+            ]
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-c",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "capability-3",
+          "fact_type": "capability",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "verified_capabilities": []
+          }
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "capability"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/capability/v1",
+          "parameters": {
+            "required_capabilities": [
+              "records.read"
+            ]
+          },
+          "requirement_id": "required-capability",
+          "requirement_type": "capability",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-multiple-eligible-preserve-rank"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "ARDGuard does not recompute relevance or prefer a lower-ranked eligible candidate.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "Servers A and B both satisfy the task; Server A remains selected because it was ranked first.",
+  "title": "Multiple eligible candidates"
+}

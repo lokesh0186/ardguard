@@ -1,0 +1,229 @@
+{
+  "decision": {
+    "decision_sha256": "5e47529cbd77a14c381a24735c0cc3355b6150500b117f71fec76f3459fdd4f0",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "authority-1"
+            ],
+            "reason_code": "authority.excessive_or_insufficient",
+            "requirement_id": "least-authority",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 98,
+        "status": "UNSATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "authority-2"
+            ],
+            "reason_code": "authority.within_policy",
+            "requirement_id": "least-authority",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "SATISFIED"
+      }
+    ],
+    "outcome": "SELECT",
+    "reason_code": "selection.fallback_to_lower_ranked_eligible",
+    "receipt": {
+      "candidate_set_sha256": "d5584fd932e60e2ce8f14f037e5834c9054b02f4c03693077a011406fcb3236d",
+      "fact_sha256": [
+        "ca4dfad337cdedc4e1485d5584216f6fa9fe540b821f8fb1838e9b3cddeb20a8",
+        "8a05f8ed601598514eafb9ba242487e28b232e36cd330908e2566fc6c3c3a8e0"
+      ],
+      "policy_sha256": "7adc8c3a59364047cab3948341195a42733806f2e18e1a0e1de8082361f82973",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "faba2e837b41800bf1823b809f0e1eb3fb877d9c49e100eafed20a12be320cb9",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "authority-1"
+          ],
+          "reason_code": "authority.excessive_or_insufficient",
+          "requirement_id": "least-authority",
+          "status": "UNSATISFIED"
+        },
+        {
+          "fact_ids": [
+            "authority-2"
+          ],
+          "reason_code": "authority.within_policy",
+          "requirement_id": "least-authority",
+          "status": "SATISFIED"
+        }
+      ],
+      "selected_candidate_id": "urn:air:example.org:service:server-b",
+      "software_version": "0.1.0b4",
+      "task_sha256": "9da67e30afd040f3c3335c3ab053382d4bda32431bc58060ff878c8283b6d73d"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": "urn:air:example.org:service:server-b",
+    "selected_rank": 2,
+    "task_id": "explorer-excessive-authority"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Not required",
+        "authority": "Exceeds policy",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Not required",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Not required",
+        "authority": "Within policy",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "SATISFIED",
+        "evidence": "Not required",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": true
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "excessive-authority",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "authority-1",
+          "fact_type": "authority",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "granted_permissions": [
+              "records.read",
+              "admin"
+            ]
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "authority-2",
+          "fact_type": "authority",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "granted_permissions": [
+              "records.read"
+            ]
+          }
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "authority"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/authority/v1",
+          "parameters": {
+            "maximum_permissions": [
+              "records.read"
+            ],
+            "required_permissions": [
+              "records.read"
+            ]
+          },
+          "requirement_id": "least-authority",
+          "requirement_type": "authority",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-excessive-authority"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "A relevant candidate can still be ineligible because its authority exceeds policy.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "Server A asks for administrative authority; Server B needs only records.read.",
+  "title": "Authority exceeds task policy"
+}

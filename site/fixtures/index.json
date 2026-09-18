@@ -1,0 +1,91 @@
+{
+  "default_scenario": "evidence-wrong-resource",
+  "fixture_schema": "ardguard.dev/decision-explorer-index/v1",
+  "package_version": "0.1.0b4",
+  "scenarios": [
+    {
+      "file": "top-ranked-eligible.json",
+      "id": "top-ranked-eligible",
+      "outcome": "SELECT",
+      "summary": "Discovery rank and eligibility agree, so Server A is selected.",
+      "title": "Top-ranked candidate is eligible"
+    },
+    {
+      "file": "ranked-fallback.json",
+      "id": "ranked-fallback",
+      "outcome": "SELECT",
+      "summary": "Server A lacks the required capability; Server B is selected without reranking.",
+      "title": "Top-ranked ineligible → fallback"
+    },
+    {
+      "file": "evidence-wrong-resource.json",
+      "id": "evidence-wrong-resource",
+      "outcome": "SELECT",
+      "summary": "Evidence for Server A is authentic but names artifact B. Server B satisfies every requirement.",
+      "title": "Authentic evidence, wrong artifact"
+    },
+    {
+      "file": "access-unavailable.json",
+      "id": "access-unavailable",
+      "outcome": "SELECT",
+      "summary": "Server A is visible but the caller lacks the required credential category.",
+      "title": "Discovery-visible, access unavailable"
+    },
+    {
+      "file": "excessive-authority.json",
+      "id": "excessive-authority",
+      "outcome": "SELECT",
+      "summary": "Server A asks for administrative authority; Server B needs only records.read.",
+      "title": "Authority exceeds task policy"
+    },
+    {
+      "file": "provider-unavailable.json",
+      "id": "provider-unavailable",
+      "outcome": "SELECT",
+      "summary": "Server A's access provider is unavailable; Server B has a verified access fact.",
+      "title": "Provider unavailable"
+    },
+    {
+      "file": "provider-operational-error.json",
+      "id": "provider-operational-error",
+      "outcome": "SELECT",
+      "summary": "Server A's provider fails operationally; Server B remains independently evaluable.",
+      "title": "Provider operational error"
+    },
+    {
+      "file": "conflicting-trusted-facts.json",
+      "id": "conflicting-trusted-facts",
+      "outcome": "DEFER",
+      "summary": "Two authorized facts disagree about Server A. ARDGuard does not majority-vote them.",
+      "title": "Conflicting trusted facts"
+    },
+    {
+      "file": "stale-evidence.json",
+      "id": "stale-evidence",
+      "outcome": "ABSTAIN",
+      "summary": "Every candidate's evidence observation is outside the required freshness window.",
+      "title": "Stale evidence"
+    },
+    {
+      "file": "all-ineligible.json",
+      "id": "all-ineligible",
+      "outcome": "ABSTAIN",
+      "summary": "No discovered candidate has the required capability.",
+      "title": "All candidates ineligible"
+    },
+    {
+      "file": "missing-mandatory-fact.json",
+      "id": "missing-mandatory-fact",
+      "outcome": "DEFER",
+      "summary": "The required access fact was not supplied for either candidate.",
+      "title": "Missing mandatory fact"
+    },
+    {
+      "file": "multiple-eligible-preserve-rank.json",
+      "id": "multiple-eligible-preserve-rank",
+      "outcome": "SELECT",
+      "summary": "Servers A and B both satisfy the task; Server A remains selected because it was ranked first.",
+      "title": "Multiple eligible candidates"
+    }
+  ]
+}

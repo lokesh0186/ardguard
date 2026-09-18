@@ -1,0 +1,221 @@
+{
+  "decision": {
+    "decision_sha256": "56bc10766ee445ba8ba0e827282163de630306584477bcd69b55210049ca71c6",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "access-credential_available-1"
+            ],
+            "reason_code": "fact.unavailable_or_indeterminate",
+            "requirement_id": "credential-available",
+            "status": "INDETERMINATE"
+          }
+        ],
+        "score": 98,
+        "status": "INDETERMINATE"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "access-credential_available-2"
+            ],
+            "reason_code": "requirement.satisfied",
+            "requirement_id": "credential-available",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "SATISFIED"
+      }
+    ],
+    "outcome": "SELECT",
+    "reason_code": "selection.fallback_to_lower_ranked_eligible",
+    "receipt": {
+      "candidate_set_sha256": "d5584fd932e60e2ce8f14f037e5834c9054b02f4c03693077a011406fcb3236d",
+      "fact_sha256": [
+        "2919b37a91a82776c8badcc48a8d34288ebb6b643c89d8c347376bf1d2802b5d",
+        "1e5a30287d89ecc2886ac4f798f5e6caa4a91b8528ce7c1de2110f8dd41434ef"
+      ],
+      "policy_sha256": "28c5937685e67dbf4cfd23483944164eb1b6b85bfc94b1f3e6e589bad3560806",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "f28004578d2c37c8d97f18d92e89a959e6447b32e2a5faee9d5da1e9eb1111af",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "access-credential_available-1"
+          ],
+          "reason_code": "fact.unavailable_or_indeterminate",
+          "requirement_id": "credential-available",
+          "status": "INDETERMINATE"
+        },
+        {
+          "fact_ids": [
+            "access-credential_available-2"
+          ],
+          "reason_code": "requirement.satisfied",
+          "requirement_id": "credential-available",
+          "status": "SATISFIED"
+        }
+      ],
+      "selected_candidate_id": "urn:air:example.org:service:server-b",
+      "software_version": "0.1.0b4",
+      "task_sha256": "521e53d1c7651d2370d2887e5f9b1acbe465765b251d894aa82be48205e154b2"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": "urn:air:example.org:service:server-b",
+    "selected_rank": 2,
+    "task_id": "explorer-provider-unavailable"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Provider unavailable",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "INDETERMINATE",
+        "evidence": "Not required",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Available",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "SATISFIED",
+        "evidence": "Not required",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": true
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "provider-unavailable",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "access-credential_available-1",
+          "fact_type": "access.credential_available",
+          "observed_at": null,
+          "provenance": {
+            "provider_status": "unavailable",
+            "retryable": true
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": null,
+          "state": "UNAVAILABLE",
+          "value": null
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "access-credential_available-2",
+          "fact_type": "access.credential_available",
+          "observed_at": null,
+          "provenance": {
+            "diagnostic_sha256": "f1c7374400621d478f9b884b3c977f1c58d1b0808c07ef4edd893027d3b6036d"
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": true
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "access.credential_available"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/access.credential_available/v1",
+          "parameters": {
+            "expected": true,
+            "predicate": "equals"
+          },
+          "requirement_id": "credential-available",
+          "requirement_type": "access.credential_available",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-provider-unavailable"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "Unavailable is not false. ARDGuard preserves uncertainty and can still select an independent candidate.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "Server A's access provider is unavailable; Server B has a verified access fact.",
+  "title": "Provider unavailable"
+}

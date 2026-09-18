@@ -5,6 +5,17 @@ versioning with Python prerelease identifiers.
 
 ## [Unreleased]
 
+### Documentation
+
+- Added a static, no-install Decision Explorer generated from the public
+  `ardguard==0.1.0b4` engine, with twelve auditable fallback and uncertainty
+  scenarios.
+- Reworked the README and public documentation around the discovery → eligibility →
+  invocation boundary, while retaining the existing security and compatibility
+  documentation.
+- Added a community Semantic Kernel interoperability example and a concise third-party
+  provider guide. These changes do not alter the Python package or decision engine.
+
 ## [0.1.0b4] - 2026-09-10
 
 ### Fixed

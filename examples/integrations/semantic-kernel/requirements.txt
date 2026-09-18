@@ -1,0 +1,4 @@
+ardguard==0.1.0b4
+semantic-kernel @ git+https://github.com/microsoft/semantic-kernel.git@35511712230dc6ccf16cea08de0a7dc85e563640#subdirectory=python
+pytest==9.1.1
+pytest-asyncio==1.4.0

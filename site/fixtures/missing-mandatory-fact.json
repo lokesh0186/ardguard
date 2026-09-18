@@ -1,0 +1,169 @@
+{
+  "decision": {
+    "decision_sha256": "294cc0a2e8bc2a9778fa1ecb14ae07662d771c0566056d99ba1c880d91d9d602",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [],
+            "reason_code": "fact.missing",
+            "requirement_id": "credential-available",
+            "status": "INDETERMINATE"
+          }
+        ],
+        "score": 98,
+        "status": "INDETERMINATE"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [],
+            "reason_code": "fact.missing",
+            "requirement_id": "credential-available",
+            "status": "INDETERMINATE"
+          }
+        ],
+        "score": 91,
+        "status": "INDETERMINATE"
+      }
+    ],
+    "outcome": "DEFER",
+    "reason_code": "selection.eligibility_indeterminate",
+    "receipt": {
+      "candidate_set_sha256": "d5584fd932e60e2ce8f14f037e5834c9054b02f4c03693077a011406fcb3236d",
+      "fact_sha256": [],
+      "policy_sha256": "28c5937685e67dbf4cfd23483944164eb1b6b85bfc94b1f3e6e589bad3560806",
+      "provider_identities": [],
+      "receipt_sha256": "a11c357d9a7abef2fc22751cb944963d93ea00f9dab38d33f959628905a7308c",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [],
+          "reason_code": "fact.missing",
+          "requirement_id": "credential-available",
+          "status": "INDETERMINATE"
+        },
+        {
+          "fact_ids": [],
+          "reason_code": "fact.missing",
+          "requirement_id": "credential-available",
+          "status": "INDETERMINATE"
+        }
+      ],
+      "selected_candidate_id": null,
+      "software_version": "0.1.0b4",
+      "task_sha256": "c6fd3f10b9b202f8cbf3ed7bafbdd17057892e775d6a7b4cba33abe0e69dae60"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": null,
+    "selected_rank": null,
+    "task_id": "explorer-missing-mandatory-fact"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Unknown",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "INDETERMINATE",
+        "evidence": "Not required",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Unknown",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "INDETERMINATE",
+        "evidence": "Not required",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": false
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "missing-mandatory-fact",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "access.credential_available"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/access.credential_available/v1",
+          "parameters": {
+            "expected": true,
+            "predicate": "equals"
+          },
+          "requirement_id": "credential-available",
+          "requirement_type": "access.credential_available",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-missing-mandatory-fact"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "Missing facts do not silently become a pass.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "The required access fact was not supplied for either candidate.",
+  "title": "Missing mandatory fact"
+}

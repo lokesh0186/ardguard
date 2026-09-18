@@ -1,0 +1,550 @@
+{
+  "decision": {
+    "decision_sha256": "ab3c0e8f924dd7d2a5435ac7fb24b0cb14f9757e580c8d0b7eccb9ecdb313a50",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "evidence-1"
+            ],
+            "reason_code": "evidence.invalid_or_not_applicable",
+            "requirement_id": "artifact-evidence",
+            "status": "UNSATISFIED"
+          },
+          {
+            "fact_ids": [
+              "access-credential_available-1"
+            ],
+            "reason_code": "requirement.satisfied",
+            "requirement_id": "credential-available",
+            "status": "SATISFIED"
+          },
+          {
+            "fact_ids": [
+              "authority-1"
+            ],
+            "reason_code": "authority.within_policy",
+            "requirement_id": "least-authority",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 98,
+        "status": "UNSATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "evidence-2"
+            ],
+            "reason_code": "evidence.applicable",
+            "requirement_id": "artifact-evidence",
+            "status": "SATISFIED"
+          },
+          {
+            "fact_ids": [
+              "access-credential_available-2"
+            ],
+            "reason_code": "requirement.satisfied",
+            "requirement_id": "credential-available",
+            "status": "SATISFIED"
+          },
+          {
+            "fact_ids": [
+              "authority-2"
+            ],
+            "reason_code": "authority.within_policy",
+            "requirement_id": "least-authority",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "SATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-c",
+        "rank": 3,
+        "requirements": [
+          {
+            "fact_ids": [
+              "evidence-3"
+            ],
+            "reason_code": "fact.missing_or_unavailable",
+            "requirement_id": "artifact-evidence",
+            "status": "INDETERMINATE"
+          },
+          {
+            "fact_ids": [
+              "access-credential_available-3"
+            ],
+            "reason_code": "requirement.satisfied",
+            "requirement_id": "credential-available",
+            "status": "SATISFIED"
+          },
+          {
+            "fact_ids": [
+              "authority-3"
+            ],
+            "reason_code": "authority.within_policy",
+            "requirement_id": "least-authority",
+            "status": "SATISFIED"
+          }
+        ],
+        "score": 84,
+        "status": "INDETERMINATE"
+      }
+    ],
+    "outcome": "SELECT",
+    "reason_code": "selection.fallback_to_lower_ranked_eligible",
+    "receipt": {
+      "candidate_set_sha256": "45cf109cfee25fae89faf4b64dd4912bbc8934f66885470c30fc8f43dccb33c2",
+      "fact_sha256": [
+        "a91af10a9a9519ec77a26536064c38a03b4f72b29cd52bda99351db5683ad827",
+        "1e5a30287d89ecc2886ac4f798f5e6caa4a91b8528ce7c1de2110f8dd41434ef",
+        "1841e3faa3e96d5b4a04fd5e0b1134187b7052b73374e399b92bc2b3ed91ec66",
+        "1539a485ed5e74f63e90818470cb3aa2fc0b7625c01265637a28acba808fbeb8",
+        "8a05f8ed601598514eafb9ba242487e28b232e36cd330908e2566fc6c3c3a8e0",
+        "898d032faff63a80f3e5a2f447a1567cccbda6f06a17707d3dd607420d4d03a1",
+        "61f14a9c03d3d310e78977a722b51868d030d2b585325a53a559cdf8bc9013b5",
+        "98bbe3d65bb410e1dbc0b9a9167db299c5643a5c8521cd9891a9ff7c0f704d69",
+        "07ea08bf571896456ffe1fc33e45582d84c6e01293c76e3fa5a0c269a343f658"
+      ],
+      "policy_sha256": "b913da7cbd748f72e30de220c11d48aa3474cc01dc85d6fe5c458f5aa39ef1fe",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "4d3c7bfbd3f2248218e6bcd1f961360bbe0107b178b47ad40a43aed285d09171",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "evidence-1"
+          ],
+          "reason_code": "evidence.invalid_or_not_applicable",
+          "requirement_id": "artifact-evidence",
+          "status": "UNSATISFIED"
+        },
+        {
+          "fact_ids": [
+            "access-credential_available-1"
+          ],
+          "reason_code": "requirement.satisfied",
+          "requirement_id": "credential-available",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "authority-1"
+          ],
+          "reason_code": "authority.within_policy",
+          "requirement_id": "least-authority",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "evidence-2"
+          ],
+          "reason_code": "evidence.applicable",
+          "requirement_id": "artifact-evidence",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "access-credential_available-2"
+          ],
+          "reason_code": "requirement.satisfied",
+          "requirement_id": "credential-available",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "authority-2"
+          ],
+          "reason_code": "authority.within_policy",
+          "requirement_id": "least-authority",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "evidence-3"
+          ],
+          "reason_code": "fact.missing_or_unavailable",
+          "requirement_id": "artifact-evidence",
+          "status": "INDETERMINATE"
+        },
+        {
+          "fact_ids": [
+            "access-credential_available-3"
+          ],
+          "reason_code": "requirement.satisfied",
+          "requirement_id": "credential-available",
+          "status": "SATISFIED"
+        },
+        {
+          "fact_ids": [
+            "authority-3"
+          ],
+          "reason_code": "authority.within_policy",
+          "requirement_id": "least-authority",
+          "status": "SATISFIED"
+        }
+      ],
+      "selected_candidate_id": "urn:air:example.org:service:server-b",
+      "software_version": "0.1.0b4",
+      "task_sha256": "26f352aa3871e55b494748e663caef218d40fb1e9d5486e84d04d9319b6396ce"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": "urn:air:example.org:service:server-b",
+    "selected_rank": 2,
+    "task_id": "explorer-evidence-wrong-resource"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Available",
+        "authority": "Within policy",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Subject mismatch",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Available",
+        "authority": "Within policy",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "SATISFIED",
+        "evidence": "Applicable",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": true
+      },
+      {
+        "access": "Available",
+        "authority": "Within policy",
+        "candidate_id": "urn:air:example.org:service:server-c",
+        "eligibility": "INDETERMINATE",
+        "evidence": "Provider unavailable",
+        "label": "Server C",
+        "rank": 3,
+        "score": 84,
+        "selected": false
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "evidence-wrong-resource",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        },
+        {
+          "displayName": "Server C",
+          "identifier": "urn:air:example.org:service:server-c",
+          "metadata": {
+            "artifact_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          },
+          "score": 84,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-c.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": "attestation:bbbbbbbbbbbb",
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "evidence-1",
+          "fact_type": "evidence",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "authentic": true,
+            "predicate_types": [
+              "https://slsa.dev/provenance/v1"
+            ],
+            "resource_id": "urn:air:example.org:service:server-a",
+            "signer_identity": "https://publisher.example/workflow/release.yml",
+            "subject_sha256": [
+              "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ],
+            "trust_valid": true
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "access-credential_available-1",
+          "fact_type": "access.credential_available",
+          "observed_at": null,
+          "provenance": {
+            "diagnostic_sha256": "78dd952d60012451e1448ed81ab45d57d41aa92a4755467057df2e5ce7e46911"
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": true
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "authority-1",
+          "fact_type": "authority",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "granted_permissions": [
+              "records.read"
+            ]
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": "attestation:bbbbbbbbbbbb",
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "evidence-2",
+          "fact_type": "evidence",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "authentic": true,
+            "predicate_types": [
+              "https://slsa.dev/provenance/v1"
+            ],
+            "resource_id": "urn:air:example.org:service:server-b",
+            "signer_identity": "https://publisher.example/workflow/release.yml",
+            "subject_sha256": [
+              "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ],
+            "trust_valid": true
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "access-credential_available-2",
+          "fact_type": "access.credential_available",
+          "observed_at": null,
+          "provenance": {
+            "diagnostic_sha256": "f1c7374400621d478f9b884b3c977f1c58d1b0808c07ef4edd893027d3b6036d"
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": true
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "authority-2",
+          "fact_type": "authority",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "granted_permissions": [
+              "records.read"
+            ]
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-c",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "evidence-3",
+          "fact_type": "evidence",
+          "observed_at": null,
+          "provenance": {
+            "provider_status": "unavailable",
+            "retryable": true
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": null,
+          "state": "UNAVAILABLE",
+          "value": null
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-c",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "access-credential_available-3",
+          "fact_type": "access.credential_available",
+          "observed_at": null,
+          "provenance": {
+            "diagnostic_sha256": "daef92d9ac8b68f9e967f872a604b44adf52f98fc9b3455b3dfdf9fe3d0a307b"
+          },
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": true
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-c",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "authority-3",
+          "fact_type": "authority",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "granted_permissions": [
+              "records.read"
+            ]
+          }
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "access.credential_available",
+            "authority",
+            "evidence"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/evidence/v1",
+          "parameters": {
+            "accepted_predicate_types": [
+              "https://slsa.dev/provenance/v1"
+            ],
+            "artifact_digest_field": "artifact_sha256",
+            "trusted_signers": [
+              "https://publisher.example/workflow/release.yml"
+            ]
+          },
+          "requirement_id": "artifact-evidence",
+          "requirement_type": "evidence",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        },
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/access.credential_available/v1",
+          "parameters": {
+            "expected": true,
+            "predicate": "equals"
+          },
+          "requirement_id": "credential-available",
+          "requirement_type": "access.credential_available",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        },
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/authority/v1",
+          "parameters": {
+            "maximum_permissions": [
+              "records.read"
+            ],
+            "required_permissions": [
+              "records.read"
+            ]
+          },
+          "requirement_id": "least-authority",
+          "requirement_type": "authority",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-evidence-wrong-resource"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "Evidence authenticity and evidence applicability are separate questions.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "Evidence for Server A is authentic but names artifact B. Server B satisfies every requirement.",
+  "title": "Authentic evidence, wrong artifact"
+}

@@ -1,0 +1,221 @@
+{
+  "decision": {
+    "decision_sha256": "a88502550d04b1d60f21cc3cef4dcccfbf12719bf9a8ad68e5e180fe0cf462c2",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "capability-1"
+            ],
+            "reason_code": "capability.mismatch",
+            "requirement_id": "required-capability",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 98,
+        "status": "UNSATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "capability-2"
+            ],
+            "reason_code": "capability.mismatch",
+            "requirement_id": "required-capability",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "UNSATISFIED"
+      }
+    ],
+    "outcome": "ABSTAIN",
+    "reason_code": "selection.no_eligible_candidate",
+    "receipt": {
+      "candidate_set_sha256": "d5584fd932e60e2ce8f14f037e5834c9054b02f4c03693077a011406fcb3236d",
+      "fact_sha256": [
+        "1d5a6289d79b83aee12ba6db7b049168daf5c6eb8717421d6e4a5e444af4a536",
+        "27c049a3d0275c106fb9e6f3a8df8f457f0b95c03c7cefe775a04541f2115b60"
+      ],
+      "policy_sha256": "45998a405848233f69429b846a578439b727f2fe301c32640ad0f05a4af2243c",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "f2b44d6172e8d109163ccbf23cfceb87eeabdef519b0f6c7292c9d5b303366e1",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "capability-1"
+          ],
+          "reason_code": "capability.mismatch",
+          "requirement_id": "required-capability",
+          "status": "UNSATISFIED"
+        },
+        {
+          "fact_ids": [
+            "capability-2"
+          ],
+          "reason_code": "capability.mismatch",
+          "requirement_id": "required-capability",
+          "status": "UNSATISFIED"
+        }
+      ],
+      "selected_candidate_id": null,
+      "software_version": "0.1.0b4",
+      "task_sha256": "f54a0d8230392d811ce3e4388ca8e66996403103072ca8a094020f0b6b3a45a3"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": null,
+    "selected_rank": null,
+    "task_id": "explorer-all-ineligible"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Capability mismatch",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Capability mismatch",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": false
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "all-ineligible",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "capability-1",
+          "fact_type": "capability",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "verified_capabilities": []
+          }
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "capability-2",
+          "fact_type": "capability",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": {
+            "verified_capabilities": []
+          }
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "capability"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/capability/v1",
+          "parameters": {
+            "required_capabilities": [
+              "records.read"
+            ]
+          },
+          "requirement_id": "required-capability",
+          "requirement_type": "capability",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-all-ineligible"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "ARDGuard abstains instead of selecting an ineligible resource.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "No discovered candidate has the required capability.",
+  "title": "All candidates ineligible"
+}

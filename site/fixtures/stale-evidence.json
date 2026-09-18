@@ -1,0 +1,216 @@
+{
+  "decision": {
+    "decision_sha256": "ce7e4329fc5b881cc7dfba9645fb74f8b245cab3b5efdac2c15e2fa7b8db6c6b",
+    "evaluations": [
+      {
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "rank": 1,
+        "requirements": [
+          {
+            "fact_ids": [
+              "freshness-1"
+            ],
+            "reason_code": "requirement.unsatisfied",
+            "requirement_id": "evidence-freshness",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 98,
+        "status": "UNSATISFIED"
+      },
+      {
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "rank": 2,
+        "requirements": [
+          {
+            "fact_ids": [
+              "freshness-2"
+            ],
+            "reason_code": "requirement.unsatisfied",
+            "requirement_id": "evidence-freshness",
+            "status": "UNSATISFIED"
+          }
+        ],
+        "score": 91,
+        "status": "UNSATISFIED"
+      }
+    ],
+    "outcome": "ABSTAIN",
+    "reason_code": "selection.no_eligible_candidate",
+    "receipt": {
+      "candidate_set_sha256": "d5584fd932e60e2ce8f14f037e5834c9054b02f4c03693077a011406fcb3236d",
+      "fact_sha256": [
+        "427330ddf7eb06833c4fb47cccac2603de5f9d1a1c82ef9b411a60add392863a",
+        "c1b96bc11c0df1da11e2c18d3b721ab881be8c642594fc09a37eab4c0a06ec8b"
+      ],
+      "policy_sha256": "36ddabffd1c9431c47d7795a50cc36951abf0db6ffed680f5431d69b9b06809f",
+      "provider_identities": [
+        {
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "receipt_sha256": "d5c381b6bfc49264d2a9129a8a34855714b09e8dfa3411c58b47ade47041ae1f",
+      "requirement_verdicts": [
+        {
+          "fact_ids": [
+            "freshness-1"
+          ],
+          "reason_code": "requirement.unsatisfied",
+          "requirement_id": "evidence-freshness",
+          "status": "UNSATISFIED"
+        },
+        {
+          "fact_ids": [
+            "freshness-2"
+          ],
+          "reason_code": "requirement.unsatisfied",
+          "requirement_id": "evidence-freshness",
+          "status": "UNSATISFIED"
+        }
+      ],
+      "selected_candidate_id": null,
+      "software_version": "0.1.0b4",
+      "task_sha256": "d1b51ef80c9b9cc0c625da25e66debace9ab9023067f66b7ef6ddf33b1947fcf"
+    },
+    "schema_version": "ardguard.dev/decision/v2",
+    "selected_candidate_id": null,
+    "selected_rank": null,
+    "task_id": "explorer-stale-evidence"
+  },
+  "display": {
+    "candidates": [
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-a",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Stale",
+        "label": "Server A",
+        "rank": 1,
+        "score": 98,
+        "selected": false
+      },
+      {
+        "access": "Not required",
+        "authority": "Not required",
+        "candidate_id": "urn:air:example.org:service:server-b",
+        "eligibility": "UNSATISFIED",
+        "evidence": "Stale",
+        "label": "Server B",
+        "rank": 2,
+        "score": 91,
+        "selected": false
+      }
+    ]
+  },
+  "fixture_schema": "ardguard.dev/decision-explorer-fixture/v1",
+  "id": "stale-evidence",
+  "input": {
+    "discovery": {
+      "results": [
+        {
+          "displayName": "Server A",
+          "identifier": "urn:air:example.org:service:server-a",
+          "metadata": {
+            "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "score": 98,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-a.json"
+        },
+        {
+          "displayName": "Server B",
+          "identifier": "urn:air:example.org:service:server-b",
+          "metadata": {
+            "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "score": 91,
+          "source": "https://catalog.example/",
+          "type": "application/vnd.mcp.server+json",
+          "url": "https://catalog.example/server-b.json"
+        }
+      ]
+    },
+    "facts": {
+      "facts": [
+        {
+          "candidate_id": "urn:air:example.org:service:server-a",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "freshness-1",
+          "fact_type": "evidence.freshness",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": "2000-01-01T00:00:00Z"
+        },
+        {
+          "candidate_id": "urn:air:example.org:service:server-b",
+          "evidence_identity": null,
+          "expires_at": null,
+          "extensions": {},
+          "fact_id": "freshness-2",
+          "fact_type": "evidence.freshness",
+          "observed_at": null,
+          "provenance": {},
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1",
+          "source_identity": "fixture:public-decision-explorer",
+          "state": "AVAILABLE",
+          "value": "2000-01-01T00:00:00Z"
+        }
+      ],
+      "schema_version": "ardguard.dev/fact-set/v2"
+    },
+    "policy": {
+      "indeterminate_action": "DEFER",
+      "operational_error_action": "ERROR",
+      "preestablished_fact_mode": true,
+      "provider_trust": [
+        {
+          "fact_types": [
+            "evidence.freshness"
+          ],
+          "provider_id": "demo.verified-provider",
+          "provider_version": "1"
+        }
+      ],
+      "schema_version": "ardguard.dev/policy/v2",
+      "selection_mode": "fallback"
+    },
+    "task": {
+      "context": {},
+      "operation": "records.read",
+      "requirements": [
+        {
+          "mode": "MANDATORY",
+          "namespace": "https://ardguard.dev/facts/evidence.freshness/v1",
+          "parameters": {
+            "expected": 86400,
+            "predicate": "fresh_within_seconds"
+          },
+          "requirement_id": "evidence-freshness",
+          "requirement_type": "evidence.freshness",
+          "schema_identity": "ardguard.dev/requirement/v1",
+          "unknown_policy": "INDETERMINATE"
+        }
+      ],
+      "schema_version": "ardguard.dev/task-contract/v2",
+      "task_id": "explorer-stale-evidence"
+    }
+  },
+  "invocation": "NOT_PERFORMED",
+  "lesson": "A previously true observation is not automatically current enough for this task.",
+  "package": {
+    "name": "ardguard",
+    "version": "0.1.0b4"
+  },
+  "summary": "Every candidate's evidence observation is outside the required freshness window.",
+  "title": "Stale evidence"
+}

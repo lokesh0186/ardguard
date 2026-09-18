@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lokesh0186.github.io/ardguard/sitemap.xml

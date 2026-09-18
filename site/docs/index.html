@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ARDGuard quick start, concepts, integrations, security boundaries, API, CLI, reason codes, receipts, and provider guide.">
+    <meta name="theme-color" content="#071019">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+    <title>Documentation | ARDGuard</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <script src="../assets/shared.js" defer></script>
+    <script src="../assets/docs.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to documentation</a>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="../" aria-label="ARDGuard home"><span class="brand-mark" aria-hidden="true">AG</span>ARDGuard</a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="../explorer/">Explorer</a>
+          <a href="./" aria-current="page">Docs</a>
+          <a href="https://github.com/lokesh0186/ardguard">GitHub</a>
+          <a class="nav-cta" href="#quick-start">Install</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="page-wrap docs-layout">
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <div class="search-box">
+          <label for="docs-search">Search docs</label>
+          <input id="docs-search" type="search" placeholder="fallback, MCP, evidence…" autocomplete="off" data-doc-search>
+        </div>
+        <nav>
+          <a href="#quick-start">Quick start</a>
+          <a href="#concepts">Concepts</a>
+          <a href="#integrations">Integrations</a>
+          <a href="#providers">Providers</a>
+          <a href="#security">Security model</a>
+          <a href="#recipes">Recipes</a>
+          <a href="#python-api">Python API</a>
+          <a href="#cli">CLI</a>
+          <a href="#reason-codes">Reason codes</a>
+          <a href="#decision-receipts">DecisionReceipts</a>
+          <a href="#compatibility">Compatibility</a>
+          <a href="#build-provider">Build a provider</a>
+          <a href="#why-filter">Why not just filter?</a>
+          <a href="#why-trust-score">Why not just trust score?</a>
+        </nav>
+      </aside>
+
+      <div class="docs-main">
+        <header class="docs-hero">
+          <p class="eyebrow">ARDGuard documentation</p>
+          <h1>From ranked candidates to an explainable decision.</h1>
+          <p>Start with the offline demo, then choose the integration surface that fits your caller. Discovery ranks. Providers establish facts. Requirements define eligibility. ARDGuard selects or fails closed. Your runtime owns invocation.</p>
+        </header>
+        <div class="search-results" data-search-results hidden aria-live="polite"></div>
+
+        <section id="quick-start" class="doc-section" data-search-entry data-search-summary="Install Beta 4 and run the deterministic offline fallback demo.">
+          <h2>60-second quick start</h2>
+          <p>Install the current public Beta 4 and run the offline demo:</p>
+          <div class="install-box"><code id="docs-install">python -m pip install ardguard==0.1.0b4</code><button class="copy-button" type="button" data-copy-target="docs-install">Copy</button></div>
+          <pre class="code-block"><code>ardguard demo</code></pre>
+          <p>Expected output from the real command:</p>
+          <pre class="code-block"><code>ARDGuard offline demo (illustrative)
+rank 1: relevant but capability-ineligible
+rank 2: eligible
+top-ranked-only validation: ABSTAIN
+ARDGuard: SELECT urn:air:example.org:tool:rank-two
+reason: selection.fallback_to_lower_ranked_eligible
+invocation: NOT PERFORMED</code></pre>
+          <p class="callout"><strong>Payoff:</strong> ARDGuard preserved the discovery order and selected the first candidate that was actually eligible. It invoked nothing.</p>
+        </section>
+
+        <section id="concepts" class="doc-section" data-search-entry data-search-summary="Relevance, eligibility, facts, requirements, fallback, and typed uncertainty.">
+          <h2>Concepts</h2>
+          <h3>Relevance</h3><p>The discovery backend answers which resource looks useful and supplies the original rank or score. ARDGuard does not recompute it.</p>
+          <h3>Facts</h3><p>Facts are typed observations bound to a candidate and provider identity. A fact can be available, unavailable, indeterminate, or an operational error. A caller cannot submit <code>eligible=true</code>.</p>
+          <h3>Requirements</h3><p>A task states what must be true: a capability, applicable evidence, an available credential category, authority limits, or another bounded fact type.</p>
+          <h3>Eligibility</h3><p>ARDGuard evaluates every mandatory requirement for each candidate. Satisfied, unsatisfied, indeterminate, and error remain distinct.</p>
+          <h3>Typed uncertainty</h3><p>A provider unavailable state remains uncertainty. A provider operational error remains an error. Neither silently becomes a negative fact or a pass.</p>
+          <h3>Fallback</h3><p>When rank #1 is ineligible and rank #2 is eligible, fallback selects rank #2. It does not reorder the eligible candidates.</p>
+          <h3>Invocation</h3><p>ARDGuard returns a decision. The caller retains runtime authorization, approval, connection, and invocation.</p>
+        </section>
+
+        <section id="integrations" class="doc-section" data-search-entry data-search-summary="ARD, hf-discover, MCP, Semantic Kernel, stdin/stdout, and loopback HTTP paths.">
+          <h2>Integrations</h2>
+          <h3 id="ard">ARD v0.91</h3>
+          <p>Feed a completed ARD SearchResponse through the native adapter. Optional search fields remain optional, returned order is preserved, and unknown extension terms are retained without semantic reinterpretation.</p>
+          <pre class="code-block"><code>ardguard evaluate \
+  --adapter ard \
+  --discovery-response discovery.json \
+  --task task.json --policy policy.json --facts facts.json</code></pre>
+
+          <h3 id="hf-discover">hf-discover</h3>
+          <p>The pinned workflow preserves hf-discover's ordering, scores, metadata, and opaque fields. Eligibility is evaluated separately.</p>
+          <pre class="code-block"><code>hf-discover search "find a weather tool" --json &gt; discovery.json
+ardguard validate --kind hf-discover discovery.json
+ardguard evaluate --adapter hf-discover \
+  --discovery-response discovery.json \
+  --task task.json --policy policy.json --facts facts.json</code></pre>
+
+          <h3 id="mcp">MCP</h3>
+          <p>The MCP provider is experimental and read-only. It can establish facts from initialization and <code>tools/list</code>; it never calls a tool. A common boundary is:</p>
+          <pre class="code-block"><code>ranked MCP candidates
+        ↓
+verified capability / access facts
+        ↓
+ARDGuard eligibility + fallback
+        ↓
+native runtime authorization and invocation</code></pre>
+
+          <h3>Semantic Kernel</h3>
+          <p>The repository includes a community interoperability example showing candidate eligibility before Semantic Kernel owns invocation. It is not an official Microsoft integration or endorsement.</p>
+          <p><a href="https://github.com/lokesh0186/ardguard/tree/main/examples/integrations/semantic-kernel">Open the community example</a></p>
+
+          <h3 id="cross-language">Any language</h3>
+          <p>Use the JSON stdin/stdout surface for the lowest-coupling integration:</p>
+          <pre class="code-block"><code>some-discovery-command | ardguard evaluate --stdin --json</code></pre>
+          <p>The experimental HTTP sidecar binds to <code>127.0.0.1</code> by default and exposes versioned local endpoints. It is not a public Internet service.</p>
+          <p><a href="../openapi-v1.yaml">Download the static OpenAPI specification</a>.</p>
+        </section>
+
+        <section id="providers" class="doc-section" data-search-entry data-search-summary="Provider SPI, exact provider trust, plugin loading, and operational failure.">
+          <h2>Providers</h2>
+          <p>A FactProvider establishes candidate facts. It cannot return a FinalDecision, select a candidate, or invoke a resource.</p>
+          <ul>
+            <li>Installed does not mean trusted.</li>
+            <li>Discovered does not mean enabled.</li>
+            <li>Enabled does not authorize every fact namespace.</li>
+            <li>Provider ID, version, and permitted fact types are policy-bound.</li>
+            <li>Provider failure becomes an explicit operational-error fact.</li>
+          </ul>
+          <p>Entry-point plugin discovery is opt in. Enabled provider Python code is part of the application's trust boundary.</p>
+        </section>
+
+        <section id="security" class="doc-section" data-search-entry data-search-summary="Fail-closed trust boundaries, no invocation, no implicit network, and plugin security.">
+          <h2>Security model</h2>
+          <p>ARDGuard protects the final-selection boundary; it is not an identity provider, authorization backend, registry, attestation issuer, or invocation runtime.</p>
+          <ul>
+            <li>Missing mandatory facts never silently pass.</li>
+            <li>Operational failure is not cryptographic invalidity.</li>
+            <li>Evidence for artifact A cannot authorize artifact B.</li>
+            <li>Relevance scores are never promoted into trust facts.</li>
+            <li>Provider identity and namespace authority are enforced.</li>
+            <li>Core offline mode makes no implicit network calls.</li>
+            <li>ARDGuard never installs or invokes selected resources.</li>
+          </ul>
+          <p class="callout callout-warning"><strong>Runtime authorization still applies.</strong> A SELECT result means the candidate satisfies the configured eligibility contract. It is not permission to bypass OAuth, RBAC, approval, or native runtime controls.</p>
+          <p><a href="https://github.com/lokesh0186/ardguard/security/policy">Report a vulnerability privately</a>.</p>
+        </section>
+
+        <section id="recipes" class="doc-section" data-search-entry data-search-summary="Copyable fallback, evidence applicability, access, authority, and operational-error recipes.">
+          <h2>Recipes</h2>
+          <table>
+            <thead><tr><th>Goal</th><th>Requirement</th><th>Expected behavior</th></tr></thead>
+            <tbody>
+              <tr><td>Require an operation</td><td><code>capability</code></td><td>Fallback when rank #1 lacks the verified capability.</td></tr>
+              <tr><td>Bind evidence</td><td><code>evidence</code></td><td>Reject authentic evidence for the wrong resource or digest.</td></tr>
+              <tr><td>Require usable access</td><td><code>access.credential_available</code></td><td>Do not select a resource when the credential category is unavailable.</td></tr>
+              <tr><td>Limit authority</td><td><code>authority</code></td><td>Reject permissions outside the configured maximum.</td></tr>
+              <tr><td>Preserve uncertainty</td><td>any mandatory requirement</td><td>Keep UNAVAILABLE and OPERATIONAL_ERROR distinct from false.</td></tr>
+            </tbody>
+          </table>
+          <p><a href="../explorer/">Run all twelve static recipes in the Decision Explorer</a>.</p>
+        </section>
+
+        <section id="python-api" class="doc-section" data-search-entry data-search-summary="Minimal Python evaluate integration and caller-owned invocation.">
+          <h2>Python API</h2>
+          <pre class="code-block"><code>from ardguard import FactSet, Policy, TaskContract, evaluate
+from ardguard.adapters import parse_search_response
+
+decision = evaluate(
+    candidates=parse_search_response(discovery_response),
+    task=TaskContract.from_mapping(task_document),
+    policy=Policy.from_mapping(policy_document),
+    facts=FactSet.from_mapping(fact_document),
+)
+
+if decision.outcome.value == "SELECT":
+    print(decision.selected_candidate_id)
+    # Your caller still owns authorization and invocation.</code></pre>
+          <p>The v1 API is the supported deterministic path. The generic v2 kernel is experimental and versioned separately.</p>
+        </section>
+
+        <section id="cli" class="doc-section" data-search-entry data-search-summary="Demo, validate, evaluate, explain, support, adapters, providers, and serve commands.">
+          <h2>CLI</h2>
+          <table>
+            <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>ardguard demo</code></td><td>Run the deterministic offline fallback example.</td></tr>
+              <tr><td><code>ardguard doctor</code></td><td>Show package, schema, adapter, and provider readiness.</td></tr>
+              <tr><td><code>ardguard validate</code></td><td>Validate versioned input or output JSON.</td></tr>
+              <tr><td><code>ardguard evaluate</code></td><td>Produce a deterministic decision without invocation.</td></tr>
+              <tr><td><code>ardguard explain</code></td><td>Validate the decision hash and explain its reason.</td></tr>
+              <tr><td><code>ardguard support</code></td><td>Print the tested support matrix.</td></tr>
+              <tr><td><code>ardguard adapters</code></td><td>Print exact adapter compatibility records.</td></tr>
+              <tr><td><code>ardguard providers list</code></td><td>Describe installed provider boundaries.</td></tr>
+              <tr><td><code>ardguard serve</code></td><td>Run the experimental loopback-only JSON service.</td></tr>
+            </tbody>
+          </table>
+          <p>Exit codes: 0 SELECT, 1 ABSTAIN, 2 invalid command or contract, 3 DEFER, 4 ERROR.</p>
+        </section>
+
+        <section id="reason-codes" class="doc-section" data-search-entry data-search-summary="Stable capability, evidence, authority, and selection reason codes.">
+          <h2>Reason codes</h2>
+          <p>Reason codes are machine-readable and shown without translation in the Explorer.</p>
+          <table>
+            <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>selection.top_ranked_eligible</code></td><td>The highest-ranked candidate is eligible.</td></tr>
+              <tr><td><code>selection.fallback_to_lower_ranked_eligible</code></td><td>A higher-ranked candidate was not eligible, so selection fell back.</td></tr>
+              <tr><td><code>selection.no_eligible_candidate</code></td><td>No candidate was established as eligible.</td></tr>
+              <tr><td><code>selection.eligibility_indeterminate</code></td><td>At least one required result remains indeterminate.</td></tr>
+              <tr><td><code>selection.engine_error</code></td><td>The decision could not complete safely.</td></tr>
+              <tr><td><code>evidence.invalid_or_not_applicable</code></td><td>The evidence did not satisfy authenticity, trust, subject, resource, or predicate applicability.</td></tr>
+              <tr><td><code>fact.provider_operational_error</code></td><td>A provider failed operationally; this is not a negative fact.</td></tr>
+            </tbody>
+          </table>
+          <p><a href="https://github.com/lokesh0186/ardguard/blob/main/docs/DECISIONS.md">Open the full stable reason catalog</a>.</p>
+        </section>
+
+        <section id="decision-receipts" class="doc-section" data-search-entry data-search-summary="Task, candidate, policy, provider, fact, verdict, and software hashes.">
+          <h2>DecisionReceipts</h2>
+          <p>A receipt makes the inputs and per-requirement result auditable without signing or invoking anything. Beta 4 receipts contain:</p>
+          <ul>
+            <li>task, candidate-set, and policy hashes;</li>
+            <li>provider identities and versions;</li>
+            <li>fact hashes;</li>
+            <li>per-requirement verdicts and reason codes;</li>
+            <li>selected candidate and software version;</li>
+            <li>a deterministic receipt hash.</li>
+          </ul>
+          <p>The receipt is content-addressed, not cryptographically signed. Use the <a href="../explorer/#evidence-wrong-resource">Explorer's provenance view</a> to inspect a complete receipt.</p>
+          <p><strong>Operational privacy:</strong> a production receipt can expose candidate identities, ranks, policy requirements, provider identities, and provenance. Keep it inside the operator's audit boundary unless it has been reviewed and appropriately redacted. The public Explorer contains synthetic data only.</p>
+        </section>
+
+        <section id="compatibility" class="doc-section" data-search-entry data-search-summary="Supported Python, ARD v0.91, hf-discover, and experimental protocol boundaries.">
+          <h2>Compatibility</h2>
+          <table>
+            <thead><tr><th>Surface</th><th>Status</th><th>Qualified boundary</th></tr></thead>
+            <tbody>
+              <tr><td>Python</td><td>SUPPORTED</td><td>CPython 3.10–3.13</td></tr>
+              <tr><td>ARD SearchResponse</td><td>SUPPORTED</td><td>ARD v0.91 at pinned commit <code>aa3e598…</code></td></tr>
+              <tr><td>hf-discover JSON</td><td>SUPPORTED</td><td>1.3.7 at pinned commit <code>49c9274…</code></td></tr>
+              <tr><td>Core capability/evidence/authority</td><td>SUPPORTED</td><td>Versioned v1 contracts</td></tr>
+              <tr><td>Generic v2 kernel and plugins</td><td>EXPERIMENTAL</td><td>Closed, versioned schemas</td></tr>
+              <tr><td>MCP introspection</td><td>EXPERIMENTAL</td><td>Read-only initialize and tools/list</td></tr>
+              <tr><td>A2A, OpenAPI, Skill parsers</td><td>EXPERIMENTAL</td><td>Offline parsing fixtures</td></tr>
+              <tr><td>Automatic invocation</td><td>UNSUPPORTED</td><td>Caller-owned by design</td></tr>
+            </tbody>
+          </table>
+          <p><a href="../support-matrix.json">Machine-readable support matrix</a>.</p>
+        </section>
+
+        <section id="build-provider" class="doc-section" data-search-entry data-search-summary="Build a minimal third-party FactProvider with bounded provider trust.">
+          <h2>Build a provider in 15 minutes</h2>
+          <p>This provider supplies deployment-region facts without changing ARDGuard core:</p>
+          <pre class="code-block"><code>from ardguard import Fact, FactOperationalState
+
+class RegionProvider:
+    provider_id = "example.region-provider"
+    provider_version = "1"
+    supported_fact_types = frozenset({"deployment.region"})
+
+    def __init__(self, regions):
+        self.regions = dict(regions)
+
+    def collect(self, candidate, task, requirements, context):
+        del task, requirements, context
+        region = self.regions.get(candidate.resource_id)
+        state = (
+            FactOperationalState.AVAILABLE
+            if region is not None
+            else FactOperationalState.INDETERMINATE
+        )
+        return (Fact(
+            fact_id=f"region:{candidate.resource_id}",
+            candidate_id=candidate.resource_id,
+            fact_type="deployment.region",
+            provider_id=self.provider_id,
+            provider_version=self.provider_version,
+            state=state,
+            value=region,
+            provenance={"source": "configured-control-plane"} if region else {},
+        ),)</code></pre>
+          <p>Policy must separately authorize <code>example.region-provider@1</code> for <code>deployment.region</code>. Loading a package never grants trust.</p>
+          <p><a href="https://github.com/lokesh0186/ardguard/blob/main/docs/BUILD_A_PROVIDER.md">Build a provider in four steps</a>, read the <a href="https://github.com/lokesh0186/ardguard/blob/main/docs/FACT_PROVIDERS.md">full provider trust model</a>, or inspect the <a href="https://github.com/lokesh0186/ardguard/tree/main/examples/provider_plugin">complete entry-point package example</a>.</p>
+        </section>
+
+        <section id="why-filter" class="doc-section" data-search-entry data-search-summary="Filtering blocks one candidate; ARDGuard reasons across the candidate set and preserves fallback.">
+          <h2>Why not just filter?</h2>
+          <pre class="code-block"><code>Filter:
+candidate A → blocked
+
+ARDGuard:
+candidate A → ineligible
+candidate B → eligible
+candidate C → indeterminate
+
+SELECT candidate B</code></pre>
+          <p>A boolean filter can remove a candidate. ARDGuard preserves the original rank, evaluates the candidate set, keeps typed uncertainty, returns a deterministic fallback, and explains the decision.</p>
+        </section>
+
+        <section id="why-trust-score" class="doc-section" data-search-entry data-search-summary="A trust score can be one fact, but eligibility is task-specific and resource-bound.">
+          <h2>Why not just a trust score?</h2>
+          <p>A trust score can be useful as one observation. It does not replace task-specific requirements.</p>
+          <p>A resource can be acceptable for a read task but exceed authority for a write task. Its evidence can be authentic for version 1.2 while the task requires version 1.3. ARDGuard keeps those facts separate, binds them to the exact resource, and composes them for the current task.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer"><div class="page-wrap footer-grid"><div><strong>ARDGuard documentation</strong><br>Public Beta 4</div><div class="footer-links"><a href="../explorer/">Decision Explorer</a><a href="https://github.com/lokesh0186/ardguard">Source</a><a href="https://pypi.org/project/ardguard/">PyPI</a></div></div></footer>
+  </body>
+</html>
